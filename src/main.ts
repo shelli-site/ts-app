@@ -7,6 +7,9 @@ import './registerServiceWorker'
 import Navigation from 'vue-navigation'
 import Vant from 'vant';
 import 'vant/lib/index.css';
+import '@/assets/icon/iconfont.js'
+import '@/style/index.css'
+import '@/components/icon'
 
 Vue.use(Vant);
 Vue.use(Navigation, {router, store})
