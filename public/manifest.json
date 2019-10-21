@@ -1,0 +1,25 @@
+{
+  "@platforms": ["android", "iPhone", "iPad"],
+  "id": "com.test.tsapp",
+  //应用的标识，创建应用时自动生成，勿手动修改
+  "name": "ts-app",
+  "short_name": "ts-app",
+  "version": {
+    "name": "1.5.0",
+    //应用版本名称
+    "code": 150
+  },
+  "permissions": {},
+  "icons": {
+    "192": "./img/icons/android-chrome-192x192.png"
+  },
+  "launch_path": "./index.html",
+  "plus": {
+    "distribute": {
+      "orientation": ["portrait-primary"]
+    }
+  },
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#4DBA87"
+}
