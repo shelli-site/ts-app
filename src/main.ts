@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './registerServiceWorker'
+import 'lib-flexible/flexible.js'
 // @ts-ignore
 import Navigation from 'vue-navigation'
 import Vant from 'vant';
