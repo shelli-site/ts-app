@@ -1,13 +1,13 @@
 {
   "@platforms": ["android", "iPhone", "iPad"],
-  "id": "com.test.tsapp",
+  "id": "ElmDemo",
   //应用的标识，创建应用时自动生成，勿手动修改
-  "name": "ts-app",
+  "name": "elm",
   "short_name": "ts-app",
   "version": {
-    "name": "1.5.0",
+    "name": "2.5.3",
     //应用版本名称
-    "code": 150
+    "code": 20503
   },
   "permissions": {},
   "icons": {
