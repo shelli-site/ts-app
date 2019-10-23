@@ -8,7 +8,7 @@
                      :fixed="false">
             <span slot="left">
                 <van-icon name="location" size="0.65rem"></van-icon>
-                <span>浙江省杭州市西湖区V</span>
+                <span>浙江省杭州市西湖区<van-icon name="arrow-down" style="vertical-align: 0px;"></van-icon></span>
             </span>
             <span slot="right">
                 <van-icon name="scan" size="0.65rem" style="padding:0 5px"></van-icon>
@@ -53,16 +53,20 @@
         </van-swipe>
 
         <div class="list-title">推荐商家</div>
-        <van-dropdown-menu class="dropdown-menu">
-            <van-dropdown-item v-model="value1" :options="option1" title-class=""></van-dropdown-item>
-            <div class="menu-b">距离</div>
-            <div class="menu-b">销量</div>
-            <div class="menu-block"></div>
-            <div class="menu-right">筛选
-                <van-icon name="filter-o" size="0.45rem"></van-icon>
-            </div>
-        </van-dropdown-menu>
-        <van-sticky :offset-top="54">
+        <van-sticky :offset-top="53" @scroll="scrollTop">
+            <el-collapse-transition>
+                <div v-show="dropdownMenu.show">
+                    <van-dropdown-menu class="dropdown-menu">
+                        <van-dropdown-item v-model="value1" :options="option1" title-class=""></van-dropdown-item>
+                        <div class="menu-b">距离</div>
+                        <div class="menu-b">销量</div>
+                        <div class="menu-block"></div>
+                        <div class="menu-right">筛选
+                            <van-icon name="filter-o" size="0.45rem"></van-icon>
+                        </div>
+                    </van-dropdown-menu>
+                </div>
+            </el-collapse-transition>
             <div class="filter-group">
                 <div class="filter-button">津贴联盟</div>
                 <div class="filter-button">满减优惠</div>
@@ -71,6 +75,72 @@
             </div>
         </van-sticky>
         <div class="sell-list">
+            <div class="sell-item">
+                <div class="sell-img"></div>
+                <div class="sell-content">
+                    <div class="title">火星烧烤</div>
+                    <div class="no">4.7</div>
+                    <div class="cost">起送￥20 夜间配送￥4.5</div>
+                    <div class="tags">
+                        <div class="tag">西湖区烧烤性价比第3名</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sell-item">
+                <div class="sell-img"></div>
+                <div class="sell-content">
+                    <div class="title">火星烧烤</div>
+                    <div class="no">4.7</div>
+                    <div class="cost">起送￥20 夜间配送￥4.5</div>
+                    <div class="tags">
+                        <div class="tag">西湖区烧烤性价比第3名</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sell-item">
+                <div class="sell-img"></div>
+                <div class="sell-content">
+                    <div class="title">火星烧烤</div>
+                    <div class="no">4.7</div>
+                    <div class="cost">起送￥20 夜间配送￥4.5</div>
+                    <div class="tags">
+                        <div class="tag">西湖区烧烤性价比第3名</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sell-item">
+                <div class="sell-img"></div>
+                <div class="sell-content">
+                    <div class="title">火星烧烤</div>
+                    <div class="no">4.7</div>
+                    <div class="cost">起送￥20 夜间配送￥4.5</div>
+                    <div class="tags">
+                        <div class="tag">西湖区烧烤性价比第3名</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sell-item">
+                <div class="sell-img"></div>
+                <div class="sell-content">
+                    <div class="title">火星烧烤</div>
+                    <div class="no">4.7</div>
+                    <div class="cost">起送￥20 夜间配送￥4.5</div>
+                    <div class="tags">
+                        <div class="tag">西湖区烧烤性价比第3名</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sell-item">
+                <div class="sell-img"></div>
+                <div class="sell-content">
+                    <div class="title">火星烧烤</div>
+                    <div class="no">4.7</div>
+                    <div class="cost">起送￥20 夜间配送￥4.5</div>
+                    <div class="tags">
+                        <div class="tag">西湖区烧烤性价比第3名</div>
+                    </div>
+                </div>
+            </div>
             <div class="sell-item">
                 <div class="sell-img"></div>
                 <div class="sell-content">
@@ -153,6 +223,9 @@
     })
     export default class Home extends Vue {
         protected form: any = {search: ''};
+        protected dropdownMenu: any = {
+            show: true
+        }
         loading: boolean = false;
         list: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         value1 = 0;
@@ -166,7 +239,18 @@
             {text: '人均从高到低', value: 6},
             {text: '通用排序', value: 7},
         ];
+        private lastTop: any = 0;
 
+        scrollTop(data: any) {
+            if (data.isFixed) {
+                let _step: number = data.scrollTop - this.lastTop
+                if (_step > 15)
+                    this.dropdownMenu.show = false
+                else if (_step < -5)
+                    this.dropdownMenu.show = true
+            }
+            this.lastTop = data.scrollTop
+        }
     }
 </script>
 
@@ -210,7 +294,9 @@
     .dropdown-menu {
         display: flex;
         justify-content: center;
-        height: 40px;
+        height: 20px;
+        padding-bottom: 5px;
+        background-color: white;
 
         .van-dropdown-menu__item {
             flex: none;

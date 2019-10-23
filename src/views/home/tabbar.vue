@@ -1,7 +1,7 @@
 <template>
     <div>
         <router-view></router-view>
-        <van-tabbar route>
+        <van-tabbar route class="taber">
             <van-tabbar-item to="/home">
                 <span>外卖</span>
                 <van-icon slot="icon"
@@ -33,5 +33,7 @@
 </script>
 
 <style scoped>
-
+    .taber {
+        border-top: solid 1px #ebedf0;
+    }
 </style>
