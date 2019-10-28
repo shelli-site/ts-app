@@ -1,6 +1,5 @@
 module.exports = {
     publicPath: './',
-    outputDir: 'dist',
     productionSourceMap: false,
     css: {
         loaderOptions: {
@@ -13,5 +12,8 @@ module.exports = {
                 ]
             }
         }
-    }
+    },
+    runtimeCompiler: true
 }
+
+

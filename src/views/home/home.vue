@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+        <!--<div class="bg-t"></div>-->
         <van-nav-bar title=""
                      left-text=""
                      right-text=""
@@ -13,7 +14,7 @@
             <span slot="right">
                 <van-icon name="scan" size="0.65rem" style="padding:0 5px"></van-icon>
                 <span>扫码</span>
-                <icon-svg iconClass="Moon-" style="font-size: 0.6rem;padding:0 5px"></icon-svg>
+                <icon-svg iconClass="Hailstorm-Night" style="font-size: 0.6rem;padding:0 5px"></icon-svg>
                 <span>21℃</span>
             </span>
         </van-nav-bar>
@@ -208,7 +209,8 @@
                 </div>
             </div>
         </div>
-        <van-divider :style="{ color: '#969799', borderColor: '#969799', padding: '0 16px' }">
+        <van-divider
+                :style="{ fontSize:'12px',color: '#969799', borderColor: '#969799', padding: '0 16px'}">
             我有底线
         </van-divider>
         <div class="block"></div>
@@ -224,7 +226,8 @@
     export default class Home extends Vue {
         protected form: any = {search: ''};
         protected dropdownMenu: any = {
-            show: true
+            show: true,
+            cash: false
         }
         loading: boolean = false;
         list: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -241,21 +244,52 @@
         ];
         private lastTop: any = 0;
 
+        created() {
+            // @ts-ignore
+            this.dropdownMenu.cash = this.$navigation.getRoutes().length > 1;
+
+
+        }
+
+
         scrollTop(data: any) {
+            if (this.dropdownMenu.cash) {
+                this.dropdownMenu.cash = false;
+                this.lastTop = data.scrollTop;
+                return
+            }
             if (data.isFixed) {
                 let _step: number = data.scrollTop - this.lastTop
-                if (_step > 15)
+                // console.log(_step)
+                if (_step > 10)
                     this.dropdownMenu.show = false
                 else if (_step < -5)
                     this.dropdownMenu.show = true
             }
             this.lastTop = data.scrollTop
         }
+
+        destroyed() {
+
+        }
     }
 </script>
 
 <style lang="scss">
     .home {
+        background-color: #ffffff;
+
+        .bg-t {
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            top: 0px;
+            height: 100%;
+            overflow: hidden;
+            z-index: -999;
+            background-color: #ffffff;
+        }
+
         .van-field__left-icon {
             position: relative;
             left: 50%;
@@ -350,10 +384,6 @@
 
     .text {
         font-size: 14px;
-    }
-
-    .block {
-        height: 50px;
     }
 
     .filter-group {

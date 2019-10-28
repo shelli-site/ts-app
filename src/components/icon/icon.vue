@@ -1,5 +1,5 @@
 <template>
-    <svg :class="svgClass" aria-hidden="true" :color="svgColor" :style="{color:svgColor}">
+    <svg :class="svgClass" aria-hidden="true" :color="svgColor" :style="{color:svgColor}" >
         <use :xlink:href="iconName"></use>
     </svg>
 </template>
@@ -27,12 +27,16 @@
             return 'svg-icon';
         }
 
+        ccc(e: any) {
+            console.log(e)
+        }
+
     }
 </script>
 
 <style scoped>
     .svg-icon {
-        width:1em;
+        width: 1em;
         height: 1em;
         vertical-align: middle;
         fill: currentColor;
