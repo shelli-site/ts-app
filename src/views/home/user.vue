@@ -11,11 +11,11 @@
             <span slot="right" :style="{fontWeight: 500,lineHeight:nav.height+'px'}">
                 <span @click="rightClick('message')">
                    <icon-svg iconClass="xiaoxi"
-                             style="font-size: 0.75rem;color:#333333;margin-right: 10px"></icon-svg>
+                             style="font-size: 0.65rem;color:#333333;margin-right: 10px"></icon-svg>
                 </span>
                  <span @click="rightClick('setting')">
                    <icon-svg iconClass="shezhi"
-                             style="font-size: 0.75rem;color:#333333;"></icon-svg>
+                             style="font-size: 0.65rem;color:#333333;"></icon-svg>
                  </span>
             </span>
         </van-nav-bar>

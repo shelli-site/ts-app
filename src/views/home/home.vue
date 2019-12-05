@@ -9,13 +9,14 @@
                      :fixed="false">
             <span slot="left">
                 <van-icon name="location" size="0.65rem"></van-icon>
-                <span>浙江省杭州市西湖区<van-icon name="arrow-down" style="vertical-align: 0px;"></van-icon></span>
+                <span>浙江省杭州市西湖区<van-icon name="arrow-down"
+                                         style="vertical-align: -3px;padding-left: 3px"></van-icon></span>
             </span>
             <span slot="right">
                 <van-icon name="scan" size="0.65rem" style="padding:0 5px"></van-icon>
                 <span>扫码</span>
-                <icon-svg iconClass="Hailstorm-Night" style="font-size: 0.6rem;padding:0 5px"></icon-svg>
-                <span>21℃</span>
+                <!--<icon-svg iconClass="Hailstorm-Night" style="font-size: 0.6rem;padding:0 5px"></icon-svg>
+                <span>21℃</span>-->
             </span>
         </van-nav-bar>
         <van-sticky>
@@ -219,6 +220,7 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
+    import UserModule from "@/store/modules/user";
 
     @Component({
         components: {},
@@ -247,8 +249,7 @@
         created() {
             // @ts-ignore
             this.dropdownMenu.cash = this.$navigation.getRoutes().length > 1;
-
-
+            // console.log(UserModule, this.$store.state.user)
         }
 
 

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
-import store from './store'
+import router from '@/router'
+import store from '@/store'
 import './registerServiceWorker'
 import 'lib-flexible/flexible.js'
 // @ts-ignore
@@ -22,7 +22,7 @@ Vue.component(CollapseTransition.name, CollapseTransition)
 
 
 Vue.use(Vant);
-Vue.use(Navigation, {router, store})
+Vue.use(Navigation, {router})
 Vue.config.productionTip = false
 
 new Vue({

@@ -1,5 +1,5 @@
 <template>
-    <svg :class="svgClass" aria-hidden="true" :color="svgColor" :style="{color:svgColor}" >
+    <svg :class="svgClass" aria-hidden="true" :color="svgColor" :style="{color:svgColor}">
         <use :xlink:href="iconName"></use>
     </svg>
 </template>
@@ -25,10 +25,6 @@
         get svgClass() {
             if (this.className) return `svg-icon ${this.className}`;
             return 'svg-icon';
-        }
-
-        ccc(e: any) {
-            console.log(e)
         }
 
     }
