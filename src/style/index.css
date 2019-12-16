@@ -1,14 +1,9 @@
-
-.block {
-    height: 50px;
-    background-color: transparent;
-}
-
 div, span {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
+
 
 

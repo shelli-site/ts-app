@@ -1,4 +1,4 @@
-import Tabbar from '../views/home/tabbar.vue'
+import Tabbar from '../views/tabs/tabbar.vue'
 
 export default [
     {
@@ -10,17 +10,17 @@ export default [
             {
                 path: '/home',
                 name: 'Home',
-                component: () => import(/* webpackChunkName: "Home" */'../views/home/home.vue')
+                component: () => import(/* webpackChunkName: "Home" */'../views/tabs/home/home.vue')
             },
             {
                 path: '/order',
                 name: 'Order',
-                component: () => import(/* webpackChunkName: "Order" */ '../views/home/order.vue')
+                component: () => import(/* webpackChunkName: "Order" */ '../views/tabs/order/order.vue')
             },
             {
                 path: '/user',
                 name: 'User',
-                component: () => import(/* webpackChunkName: "User" */ '../views/home/user.vue')
+                component: () => import(/* webpackChunkName: "User" */ '../views/tabs/user/user.vue')
             }
         ]
     },

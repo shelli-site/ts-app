@@ -45,7 +45,6 @@
             <div class="menu-item"></div>
             <div class="menu-item"></div>
         </div>
-        <div class="block"></div>
     </div>
 </template>
 

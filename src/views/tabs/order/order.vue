@@ -13,7 +13,6 @@
         </van-nav-bar>
         <div class="bg-nav"></div>
         <div class="bg-t"></div>
-        <!--<div class="bg-b"></div>-->
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refresh">
             <div class="order-list">
                 <div class="list-title">我的订单</div>
@@ -191,7 +190,6 @@
             <van-divider :style="{ fontSize:'12px',color: '#969799', borderColor: '#969799', padding: '0 16px' }">
                 我有底线
             </van-divider>
-            <div class="block"></div>
         </van-pull-refresh>
     </div>
 </template>

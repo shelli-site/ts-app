@@ -1,6 +1,8 @@
 <template>
     <div>
-        <router-view></router-view>
+        <div style="padding-bottom: 50px">
+            <router-view></router-view>
+        </div>
         <van-tabbar route class="taber">
             <van-tabbar-item to="/home">
                 <span class="no-select">外卖</span>
