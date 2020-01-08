@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="padding-bottom: 50px">
+        <div style="padding-bottom: 50px" class="page">
             <router-view></router-view>
         </div>
         <van-tabbar route class="taber">
@@ -38,5 +38,9 @@
     .taber {
         border-top: solid 1px #ebedf0; /*px*/
         background: #f8f8f8;
+    }
+
+    .page {
+        min-height: 617px;
     }
 </style>

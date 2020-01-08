@@ -15,6 +15,7 @@ export interface UserState {
 @Module({dynamic: true, store, name: 'user'})
 export class User extends VuexModule implements UserState {
     isLogin: boolean = false;
+    navHeight: number = 60;
     token: string = '';
     version: string = '';
     account: string = '';
@@ -108,6 +109,11 @@ export class User extends VuexModule implements UserState {
             nickname: user.nickname,
             functionList: user.functionList,
         }
+    }
+
+    @Mutation
+    init() {
+        return;
     }
 }
 

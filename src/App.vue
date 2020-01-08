@@ -7,10 +7,14 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator'
     import {plusReady} from '@/utils/native'
+    import UserModule from "@/store/modules/user";
+    import AppModule from "@/store/modules/app";
 
     @Component
     export default class App extends Vue {
         created() {
+            UserModule.init();
+            AppModule.init();
             let _this = this;
             plusReady(() => {
                 //仅支持竖屏显示
@@ -80,36 +84,7 @@
                 function handlePushGetRun(payload: any) {
                     let codeType = JSON.parse(payload.params).code.split(".")[0];
                     let id = "";
-                    if (codeType === "patrol") {
-                        id = JSON.parse(payload.params).patrolTaskId;
-                        _this.$router.push({name: 'PatrolInfo', params: {id}});
-                    }
-                    if (codeType === "exam") {
-                        _this.$router.push({name: 'AnswerList'});
-                    }
-                    if (codeType === "circle") {
-                        id = JSON.parse(payload.params).articleId;
-                        _this.$router.push({name: "CircleArticle", params: {id}});
-                    }
-                    if (codeType === "attendance") {
-                        _this.$router.push({name: "Worksigin"});
-                    }
-                    if (codeType === "hazard") {
-                        id = JSON.parse(payload.params).hazardExampleId;
-                        _this.$router.push({name: "HazardInfo", params: {id}});
-                    }
-                    if (codeType === "space" || codeType === "platform") {
-                        _this.$router.push({name: 'Message'})
-                    }
-                    if (codeType === "workOrder") {
-                        id = JSON.parse(payload.params).id;
-                        if (id) {
-                            _this.$router.push({name: "WorkOrderInfo", params: {id}});
-                        }
-                    }
-                    if (codeType === "facility") {
-                        _this.$router.push({name: "WorkOrderRegister"});
-                    }
+                    console.log(codeType);
                 }
             });
         }
@@ -121,9 +96,9 @@
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        text-align: center;
+        /*text-align: center;*/
         color: #2c3e50;
-        /*background-color: #ffffff;*/
+        background-color: #f8f8f8;
     }
 
 </style>

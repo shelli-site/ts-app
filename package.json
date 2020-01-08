@@ -15,7 +15,8 @@
     "svg-sprite-loader": "^4.1.6",
     "ts-import-plugin": "^1.6.1",
     "ts-loader": "^6.2.0",
-    "vant": "^2.2.7",
+    "vant": "^2.4.1",
+    "vconsole": "^3.3.4",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
     "vue-navigation": "^1.1.4",
@@ -51,6 +52,9 @@
     ],
     "parserOptions": {
       "parser": "@typescript-eslint/parser"
+    },
+    "rules": {
+      "no-console": "off"
     }
   },
   "browserslist": [

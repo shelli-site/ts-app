@@ -10,8 +10,9 @@ export interface RootState {
     user: UserState;
 }
 
-const store = new Vuex.Store<RootState>({});
-
+const store = new Vuex.Store<RootState>({
+    modules: {}
+});
 window.$store = store;
 
 export default store;

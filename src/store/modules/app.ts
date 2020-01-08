@@ -1,5 +1,6 @@
 import {getModule, Module, Mutation, VuexModule} from 'vuex-module-decorators';
 import store from '@/store';
+import {plusReady} from "@/utils/native";
 
 export interface AppState {
 
@@ -7,9 +8,8 @@ export interface AppState {
 
 @Module({dynamic: true, store, name: 'app'})
 export class App extends VuexModule implements AppState {
-    menu: any = [];
-    statusBarHeight: number = 20;
-    navBarHeight: number = 45;
+    navBarHeight: number = 60;
+    appVersion: string = '';
     newAppVersion: string = '';
     newAppUrl: string = '';
     isUpload: boolean = false;
@@ -27,6 +27,19 @@ export class App extends VuexModule implements AppState {
     @Mutation
     setIsUpload(isUpload: boolean) {
         this.isUpload = isUpload;
+    }
+
+    @Mutation
+    init() {
+        this.navBarHeight = 60;
+        plusReady(() => {
+            plus.runtime.getProperty(
+                plus.runtime.appid,
+                (wgt: any) => {
+                    this.appVersion = wgt.version
+                }
+            );
+        })
     }
 }
 

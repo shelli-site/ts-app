@@ -8,9 +8,13 @@ import 'lib-flexible/flexible.js'
 import Navigation from 'vue-navigation'
 import Vant from 'vant';
 import 'vant/lib/index.css';
+import 'vant/lib/icon/local.css';
 import '@/assets/icon/iconfont.js'
 import '@/style/index.css'
 import '@/components/icon'
+
+import VConsole from 'vconsole'
+// const vconsole = new VConsole();
 
 // fade/zoom 等
 import 'element-ui/lib/theme-chalk/base.css';
@@ -20,9 +24,8 @@ import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
 
 Vue.component(CollapseTransition.name, CollapseTransition)
 
-
 Vue.use(Vant);
-Vue.use(Navigation, {router})
+Vue.use(Navigation, {router, store})
 Vue.config.productionTip = false
 
 new Vue({
