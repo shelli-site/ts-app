@@ -24,6 +24,10 @@ import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
 
 Vue.component(CollapseTransition.name, CollapseTransition)
 
+import Loading from "@/components/loading"
+
+Vue.use(Loading)
+
 Vue.use(Vant);
 Vue.use(Navigation, {router, store})
 Vue.config.productionTip = false

@@ -5,14 +5,12 @@
                      right-text=""
                      :border="false"
                      :left-arrow="false"
+                     :z-index="10"
                      fixed>
             <span slot="left">
-                <!--<van-icon name="location" size="0.65rem"></van-icon>
-                <span>浙江省杭州市西湖区<van-icon name="arrow-down"
-                                         style="vertical-align: -3px;padding-left: 3px"></van-icon></span>-->
             </span>
             <div slot="right" style="display: flex;height:46px;align-items: center">
-                <div class="right-icon">
+                <div class="right-icon" @click="status.loading = !status.loading">
                     <van-icon style="display: table-cell;vertical-align: middle;" name="search"
                               size="0.65rem"></van-icon>
                 </div>
@@ -53,40 +51,28 @@
     })
     export default class Home extends Vue {
         protected form: any = {search: ''};
+        status: any = {
+            loading: false
+        };
+
+        mounted() {
+            this.$elLoading({duration: 10000});
+        }
 
         destroyed() {
-
+            this.$elLoading().hide();
         }
     }
 </script>
 
 <style lang="scss">
     .home {
-        /*background-color: #ffffff;*/
-
-        /* .bg-t {
-             position: absolute;
-             left: 0px;
-             right: 0px;
-             top: 0px;
-             height: 100%;
-             overflow: hidden;
-             z-index: -999;
-             background-color: #ffffff;
-         }*/
-
         .van-field__left-icon {
             position: relative;
             left: 50%;
             transform: translateX(-50%);
         }
     }
-
-
-    /*.van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after {*/
-    /*border-width: 0;*/
-    /*}*/
-
 </style>
 
 <style lang="scss" scoped>

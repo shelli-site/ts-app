@@ -1,14 +1,15 @@
 <template>
     <div class="user">
         <van-nav-bar ref="navBar"
-                     :style="{height: $store.state.app.navBarHeight +'px'}"
+                     :style="{height: nav.height +'px'}"
                      left-text=""
                      right-text=""
                      :left-arrow="false"
                      :border="false"
+                     :z-index="10"
                      fixed>
-            <span slot="title" :style="{lineHeight:$store.state.app.navBarHeight+'px'}">{{nav.title}}</span>
-            <span slot="right" :style="{fontWeight: 500,lineHeight:$store.state.app.navBarHeight+'px'}">
+            <span slot="title" :style="{lineHeight:nav.height+'px'}">{{nav.title}}</span>
+            <span slot="right" :style="{fontWeight: 500,lineHeight:nav.height+'px'}">
                 <span @click="rightClick('message')">
                    <icon-svg iconClass="xiaoxi"
                              style="font-size: 0.65rem;color:#333333;margin-right: 10px"></icon-svg>
@@ -91,7 +92,8 @@
     @Component
     export default class User extends Vue {
         protected nav: any = {
-            title: ''
+            title: '',
+            height: 60
         };
         status: any = {
             login: this.$store.state.user.isLogin
@@ -198,6 +200,7 @@
 
 <style lang="scss" scoped>
     .user {
+        overflow: hidden;
         .user--info {
             height: 135px;
             display: flex;
@@ -298,6 +301,6 @@
     }
 
     .bg-nav {
-        height: 60px;
+        height: 57px;
     }
 </style>

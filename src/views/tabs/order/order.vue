@@ -6,6 +6,7 @@
                      right-text=""
                      :left-arrow="false"
                      :border="false"
+                     :z-index="10"
                      @click-right="onClickRight"
                      fixed>
             <span slot="title" :style="{opacity:nav.opacity,lineHeight:nav.height+'px'}">{{nav.title}}</span>

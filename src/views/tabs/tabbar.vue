@@ -3,9 +3,9 @@
         <div style="padding-bottom: 50px" class="page">
             <router-view></router-view>
         </div>
-        <van-tabbar route class="taber">
+        <van-tabbar route class="taber" :z-index="10">
             <van-tabbar-item to="/home">
-                <span class="no-select">外卖</span>
+                <span class="no-select">点单</span>
                 <van-icon slot="icon"
                           slot-scope="props"
                           :name="props.active ? 'wap-home' : 'wap-home-o'"></van-icon>
@@ -41,6 +41,6 @@
     }
 
     .page {
-        min-height: 617px;
+        min-height: 590px;
     }
 </style>

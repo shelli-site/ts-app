@@ -5,5 +5,10 @@ div, span {
     user-select: none;
 }
 
+.no-scroll {
+    /*height: 100%;*/
+    overflow: hidden;
+}
+
 
 

@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "element-ui": "^2.12.0",
+    "element-ui": "^2.13.0",
     "lib-flexible": "^0.3.2",
     "register-service-worker": "^1.6.2",
     "svg-sprite-loader": "^4.1.6",
