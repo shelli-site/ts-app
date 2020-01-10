@@ -9,7 +9,17 @@ interface Options {
 
 declare module 'vue/types/vue' {
     interface Vue {
-        $elLoading(options?: Options): any
+        $elLoading(options?: Options): {
+            hide: Function
+        },
+
+        $navigation: {
+            on(eventName: 'forward' | 'back' | 'replace' | 'refresh' | 'reset', callback?: (to: any, from: any) => any): any,
+            once(eventName: 'forward' | 'back' | 'replace' | 'refresh' | 'reset', callback?: (to: any, from: any) => any): any,
+            off(eventName: 'forward' | 'back' | 'replace' | 'refresh' | 'reset', callback?: (to: any, from: any) => any): any,
+            getRoutes(): any,
+            cleanRoutes(): any,
+        }
     }
 }
 
@@ -17,6 +27,7 @@ class defaults extends Option {
     loading = false;
     text = '';
 }
+
 let loadingVueLoading: any;
 const loadingVueConstructor: any = Vue.extend(elLoading);
 loadingVueConstructor.prototype.hide = function () {

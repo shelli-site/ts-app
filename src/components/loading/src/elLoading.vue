@@ -55,6 +55,7 @@
         },
         created() {
         },
+        methods: {},
         mounted() {
             document.documentElement.className = 'no-scroll';
             document.body.className = 'no-scroll';

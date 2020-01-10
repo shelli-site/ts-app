@@ -56,7 +56,9 @@
         };
 
         mounted() {
-            this.$elLoading({duration: 10000});
+            this.$elLoading({duration: 2000});
+            this.$navigation.on('back', (to, from) => {
+            })
         }
 
         destroyed() {
