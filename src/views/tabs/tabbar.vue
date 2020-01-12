@@ -5,7 +5,7 @@
         </div>
         <van-tabbar route class="taber" :z-index="10">
             <van-tabbar-item to="/home">
-                <span class="no-select">点单</span>
+                <span class="no-select">点餐</span>
                 <van-icon slot="icon"
                           slot-scope="props"
                           :name="props.active ? 'wap-home' : 'wap-home-o'"></van-icon>

@@ -13,7 +13,7 @@ import '@/assets/icon/iconfont.js'
 import '@/style/index.css'
 import '@/components/icon'
 
-import VConsole from 'vconsole'
+// import VConsole from 'vconsole'
 // const vconsole = new VConsole();
 
 // fade/zoom 等
