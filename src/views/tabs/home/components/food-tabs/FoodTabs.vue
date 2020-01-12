@@ -79,7 +79,7 @@
         text-align: center;
         font-size: 14px;
         letter-spacing: 1px;
-        line-height: 16px;
+        line-height: 20px;
         position: relative;
     }
 
@@ -88,7 +88,7 @@
         content: "";
         position: absolute;
         background-color: #ff4301;
-        bottom: -13px;
+        bottom: -9px;
         left: 0px;
         right: 0px;
         height: 3px;

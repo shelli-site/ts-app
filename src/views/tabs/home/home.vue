@@ -108,7 +108,6 @@
     export default class Home extends Vue {
         protected form: any = {search: ''};
         style: any = {
-            navBarOpacity: 1,
             navBarIconColor: '#333333',
             navBarBackgroundColor: '#ffffff',
             navBarBackgroundImage: ''
@@ -220,9 +219,9 @@
                 this.style.navBarIconColor = '#ffffff';
                 this.style.navBarBackgroundColor = 'rgba(0,0,0,0)';
                 this.style.navBarBackgroundImage = '';
-            } else if (20 < scrollTop && scrollTop < 38) {
+            } else if (20 < scrollTop && scrollTop < 100) {
                 this.style.navBarIconColor = '#ffffff';
-                this.style.navBarBackgroundColor = `rgba(255,255,255,${1 - ((38 - scrollTop) / 20)})`
+                this.style.navBarBackgroundColor = `rgba(255,255,255,${1 - ((100 - scrollTop) / 20)})`
                 this.style.navBarBackgroundImage = '';
             } else {
                 this.style.navBarIconColor = '#333333';
