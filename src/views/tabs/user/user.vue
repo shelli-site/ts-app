@@ -22,22 +22,23 @@
         </van-nav-bar>
         <div class="bg-nav"></div>
         <div :class="['user--info',{'user--info-un-login':!status.login}]">
-            <div class="user--info-left">
+            <div class="user--info-left" @click="()=>{$router.push({name:'UserInfo'})}">
                 <div v-if="!status.login" class="un-login-text">立即登录
                     <van-icon name="arrow" color="#5b5959" size="18"
                               style="margin-left: -10px;font-weight: bold"></van-icon>
                 </div>
+                <div v-else class="nickname van-ellipsis">{{$store.state.user.nickname}}</div>
             </div>
             <div class="user--info-right">
                 <van-image class="avatar" round fit="cover"
-                           src="">
+                           :src="!status.login?'':$store.state.user.avatar">
                     <template slot="error">
                         <img src="img/default-avatar.svg" style="width: 100%;height: 100%">
                     </template>
                 </van-image>
             </div>
         </div>
-        <div :class="['ad',{'ad-un-login':!status.login}]">
+        <div v-if="false" :class="['ad',{'ad-un-login':!status.login}]">
             <template v-if="status.login">
                 <div class="vip"></div>
                 <div class="red-envelope">
@@ -52,7 +53,7 @@
             </div>
         </div>
         <div class="menu-list">
-            <van-cell size="large" is-link>
+            <van-cell size="large" is-link @click="()=>{$router.push({name:'UserInfo'})}">
                 <div slot="icon" style="padding-right: 10px;">
                     <van-icon color="#009afe" name="like-o" size="16" style="margin-top: 4px;"/>
                 </div>
@@ -76,7 +77,7 @@
                     关于
                 </div>
                 <div slot="default">
-                    <van-tag round type="primary">新版本</van-tag>
+                    <van-tag round type="primary" v-show="status.newVersion">有新版本!</van-tag>
                     {{$store.state.app.appVersion}}
                 </div>
             </van-cell>
@@ -87,7 +88,9 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import {Toast} from "vant";
+    import AppAPI from '@/api/app/app';
     import {plusReady} from "@/utils/native";
+    import AppModule from "@/store/modules/app";
 
     @Component
     export default class User extends Vue {
@@ -96,19 +99,23 @@
             height: 60
         };
         status: any = {
-            login: this.$store.state.user.isLogin
+            login: this.$store.state.user.isLogin,
+            newVersion: false
         }
         version: any = null;
+
+        created() {
+            this.getAppVersion();
+        }
 
         mounted() {
             window.addEventListener('scroll', this.scrollTo)
             this.scrollTo();
-            // this.version = '1.2.6'
             plusReady(() => {
                 plus.runtime.getProperty(
                     plus.runtime.appid,
                     (wgt: any) => {
-                        this.version = wgt.version
+                        AppModule.setAppVersion(wgt.version);
                     }
                 );
             })
@@ -191,6 +198,16 @@
             this.nav.title = scrollTop < 70 ? '' : '我的';
         }
 
+        async getAppVersion() {
+            try {
+                const res: any = await AppAPI.getAppStatus();
+                this.version = res.appVersion;
+                this.status.newVersion = this.$store.state.app.appVersion !== this.version;
+            } catch (e) {
+                throw e
+            }
+        }
+
         destroyed() {
             window.removeEventListener('scroll', this.scrollTo)
             Toast.clear(true);
@@ -201,6 +218,7 @@
 <style lang="scss" scoped>
     .user {
         overflow: hidden;
+
         .user--info {
             height: 135px;
             display: flex;
@@ -212,6 +230,16 @@
                 height: 100%;
 
                 flex: 1;
+
+                .nickname {
+                    font-size: 25px;
+                    font-weight: bold;
+                    padding-top: 35px;
+                    padding-left: 22px;
+                    text-align: left;
+                    color: black;
+                    letter-spacing: 2px;
+                }
 
                 .un-login-text {
                     font-size: 25px;

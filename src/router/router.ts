@@ -24,6 +24,16 @@ export default [
             }
         ]
     },
+    {
+        path: '/login',
+        name: 'Login',
+        component: () => import(/* webpackChunkName: "Login" */'../views/auth/login/login.vue')
+    },
+    {
+        path: '/UserInfo',
+        name: 'UserInfo',
+        component: () => import(/* webpackChunkName: "UserInfo" */'../views/auth/UserInfo/UserInfo.vue')
+    }
 
 ]
 

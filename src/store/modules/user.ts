@@ -1,15 +1,17 @@
 import {Action, getModule, Module, Mutation, MutationAction, VuexModule} from 'vuex-module-decorators';
 import {plusReady} from "@/utils/native";
 import store from '@/store';
+import {getToken, setToken} from "@/utils/auth";
+import AppAPI from '@/api/app/app';
 
 export interface UserState {
     isLogin: boolean,
     token: string,
     version: string,
-    account: string,
+    username: string,
     nickname: string,
     avatar: string,
-    functionList: string[],
+    roles: string[],
 }
 
 @Module({dynamic: true, store, name: 'user'})
@@ -18,51 +20,40 @@ export class User extends VuexModule implements UserState {
     navHeight: number = 60;
     token: string = '';
     version: string = '';
-    account: string = '';
+    username: string = '';
     nickname: string = '';
+    email: string = '';
+    phone: string = '';
     avatar: string = '';
-    functionList: any[] = [];
+    roles: any[] = [];
 
     constructor() {
         super(VuexModule);
-        this.setToken('123');
+        this.setToken(getToken());
     }
 
     @Mutation
     setToken(token: string) {
         this.token = token || '';
-        return
-    }
-
-    @Mutation
-    setAppVersion(version: string) {
-        this.version = version || '';
+        setToken(token);
         return
     }
 
     @Action
-    async login(userInfo: { account: string, password: string }) {
+    async login(userInfo: { username: string, password: string }) {
         try {
             let clientInfo: any = null;
             await plusReady(() => {
                 clientInfo = plus.push.getClientInfo();
             });
-            /*const res: any = await AccountAPI.login({
-                account: userInfo.account,
+            const res: any = await AppAPI.login({
+                username: userInfo.username,
                 password: userInfo.password,
-                clientId: clientInfo ? clientInfo.clientid : '',
+                clientId: clientInfo ? clientInfo.clientid : 'pc-debug',
             });
-            if (res.code !== 200) throw new Error();
-            const user = res.data;
-            this.setToken(user.token);*/
-            plusReady(() => {
-                plus.runtime.getProperty(
-                    plus.runtime.appid,
-                    (wgtInfo: any) => {
-                        this.setAppVersion(wgtInfo.version)
-                    }
-                );
-            })
+            this.setToken(res.token);
+            this.setUser(res.user);
+            return res;
         } catch (e) {
             throw e
         }
@@ -70,50 +61,46 @@ export class User extends VuexModule implements UserState {
 
     @MutationAction({
         mutate: [
-            'account',
+            'username',
             'nickname',
-            'functionList'
+            'roles'
         ]
     })
     async signOut() {
         localStorage.clear();
         return {
-            account: '',
+            username: '',
             nickname: '',
-            functionList: []
+            roles: []
         }
     }
 
-    @MutationAction({
-        mutate: [
-            'account',
-            'nickname',
-            'functionList'
-        ]
-    })
+    @Action
     async getInfo() {
-        const state: UserState | any = this.state;
-        const res: any = {
-            code: 200., data: {
-                account: '',
-                nickname: '',
-                functionList: [],
-            }
-        }/*await AccountAPI.getUserByToken({spaceId: state.spaceId});*/
-
-        if (res.code !== 200) throw new Error();
-
-        const user = res.data;
-        return {
-            account: user.account,
-            nickname: user.nickname,
-            functionList: user.functionList,
+        try {
+            const user: any = await AppAPI.getUserInfo();
+            this.setUser(user);
+            return user
+        } catch (e) {
+            throw e
         }
+
     }
 
     @Mutation
     init() {
         return;
+    }
+
+    @Mutation
+    setUser(user: any) {
+        this.username = user.username;
+        this.nickname = user.nickName;
+        this.email = user.email;
+        this.phone = user.phone;
+        this.avatar = user.avatar;
+        this.roles = user.roles;
+        this.isLogin = !!user;
     }
 }
 

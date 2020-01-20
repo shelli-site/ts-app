@@ -1,4 +1,6 @@
 import Axios from 'axios'
+import AppModule from "@/store/modules/app";
+import UserModule from "@/store/modules/user";
 
 let instance = Axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
@@ -10,8 +12,8 @@ let instance = Axios.create({
 
 // 接口请求拦截器
 instance.interceptors.request.use(request => {
-    request.headers.Authorization = window.localStorage.token;
-    request.headers.AppVersion = window.localStorage.version;
+    request.headers.Authorization = UserModule.token;
+    request.headers.AppVersion = AppModule.appVersion;
     return request
 });
 
@@ -21,7 +23,7 @@ instance.interceptors.response.use(
         return response.data
     },
     error => {
-        if(!error.response) {
+        if (!error.response) {
             return {
                 code: 400
             }
@@ -29,7 +31,7 @@ instance.interceptors.response.use(
         switch (error.response.status) {
             case 401:
                 localStorage.clear();
-                if(window.$route.name !== 'Login'){
+                if (window.$route.name !== 'Login') {
                     window.$router.replace({name: 'Login'});
                 }
                 break;

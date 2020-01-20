@@ -9,13 +9,18 @@ export interface AppState {
 @Module({dynamic: true, store, name: 'app'})
 export class App extends VuexModule implements AppState {
     navBarHeight: number = 60;
-    appVersion: string = '';
+    appVersion: string = '1.0.0';
     newAppVersion: string = '';
     newAppUrl: string = '';
     isUpload: boolean = false;
 
     constructor() {
         super(VuexModule);
+    }
+
+    @Mutation
+    setAppVersion(appVersion: string) {
+        this.appVersion = appVersion;
     }
 
     @Mutation

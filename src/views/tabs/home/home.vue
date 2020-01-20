@@ -130,7 +130,7 @@
                     foodList: [
                         {
                             span: 24,
-                            pictureUrl: 'http://wx3.sinaimg.cn/crop.0.580.1062.596.1000/b651441agy1ff0ea1h6fzj20ti18f7iv.jpg',
+                            pictureUrl: 'https://bkimg.cdn.bcebos.com/pic/f2deb48f8c5494ee95c8197a21f5e0fe98257eee?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2U5Mg==,xp_5,yp_5',
                             foodName: '回锅肉',
                             monthlySalesVolume: '8',
                             price: 25.01,
@@ -157,7 +157,7 @@
                     foodList: [
                         {
                             span: 12,
-                            pictureUrl: 'http://wx3.sinaimg.cn/crop.0.580.1062.596.1000/b651441agy1ff0ea1h6fzj20ti18f7iv.jpg',
+                            pictureUrl: 'https://bkimg.cdn.bcebos.com/pic/f2deb48f8c5494ee95c8197a21f5e0fe98257eee?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2U5Mg==,xp_5,yp_5',
                             foodName: '回锅肉',
                             monthlySalesVolume: '8',
                             price: 25.01,
@@ -177,7 +177,7 @@
                     foodList: [
                         {
                             span: 8,
-                            pictureUrl: 'http://wx3.sinaimg.cn/crop.0.580.1062.596.1000/b651441agy1ff0ea1h6fzj20ti18f7iv.jpg',
+                            pictureUrl: 'https://bkimg.cdn.bcebos.com/pic/f2deb48f8c5494ee95c8197a21f5e0fe98257eee?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2U5Mg==,xp_5,yp_5',
                             foodName: '回锅肉',
                             monthlySalesVolume: '8',
                             price: 25.01,

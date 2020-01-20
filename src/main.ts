@@ -16,6 +16,16 @@ import '@/components/icon'
 // import VConsole from 'vconsole'
 // const vconsole = new VConsole();
 
+// 取消 Uncaught (in promise) undefined  vue-router.esm.js?c478:2051  错误
+// （原因为版本问题，npm i vue-router@3.0 -S 降版本应该也可解决）
+import Router from 'vue-router'
+
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location:any) {
+    // @ts-ignore
+    return originalPush.call(this, location).catch((err:any) => err)
+};
+
 // fade/zoom 等
 import 'element-ui/lib/theme-chalk/base.css';
 // collapse 展开折叠
