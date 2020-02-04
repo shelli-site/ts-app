@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <router-view/>
+        <transition :name="transitionName">
+            <router-view class="child-view"/>
+        </transition>
         <div class="bg"></div>
     </div>
 </template>
@@ -13,6 +15,8 @@
 
     @Component
     export default class App extends Vue {
+        transitionName: string = 'van-fade';
+
         created() {
             UserModule.init();
             AppModule.init();
@@ -88,6 +92,34 @@
                     console.log(codeType);
                 }
             });
+
+            let whitelist = ['User', 'Order', 'Home'];
+            // bind event ， 更多参数移步vue-navigation
+            // @ts-ignore
+            this.$navigation.on('forward', (to, from) => {
+                let whiteIndex = whitelist.findIndex(whiteName => whiteName === to.route.name);
+                if (whiteIndex === -1) {
+                    this.transitionName = 'slide-left'
+                } else {
+                    this.transitionName = 'van-fade'
+                }
+            });
+            // @ts-ignore
+            this.$navigation.on('back', (to, from) => {
+                let toWhiteIndex = whitelist.findIndex(whiteName => whiteName === to.route.name);
+                let fromWhiteIndex = whitelist.findIndex(whiteName => whiteName === from.route.name);
+
+
+                if (toWhiteIndex > -1 && fromWhiteIndex === -1) {
+                    this.transitionName = 'slide-right'
+                } else {
+                    if (toWhiteIndex === -1) {
+                        this.transitionName = 'slide-right'
+                    } else {
+                        this.transitionName = 'van-fade'
+                    }
+                }
+            })
         }
     }
 
@@ -111,4 +143,30 @@
         z-index: -99;
     }
 
+
+    .child-view {
+        position: absolute;
+        background-color: #f8f8f8;
+        width: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .slide-left-enter-active, .slide-right-enter-active {
+        transition: all .3s cubic-bezier(.25, .1, .25, 1);
+    }
+
+    .slide-left-leave-active, .slide-right-leave-active {
+        transition: all .5s cubic-bezier(.25, .1, .25, 1);
+    }
+
+    .slide-left-enter, .slide-right-leave-to {
+        transform: translate(100%, 0);
+    }
+
+    .slide-left-leave-to, .slide-right-enter {
+        opacity: 0;
+    }
 </style>

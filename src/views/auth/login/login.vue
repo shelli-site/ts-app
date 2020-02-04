@@ -27,7 +27,6 @@
 
 <script lang="ts">
     import {Component, Vue, Watch} from "vue-property-decorator";
-    import AppAPI from '@/api/app/app';
     import UserModule from "@/store/modules/user";
 
     @Component({

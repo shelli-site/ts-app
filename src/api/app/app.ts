@@ -13,7 +13,7 @@ function login(data: any = {
     clientId: ''
 }) {
     return instance.request({
-        url: '/app/auth/login',
+        url: '/api/app_auth/login',
         method: "post",
         data
     })

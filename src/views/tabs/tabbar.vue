@@ -41,6 +41,5 @@
     }
 
     .page {
-        min-height: 590px;
     }
 </style>

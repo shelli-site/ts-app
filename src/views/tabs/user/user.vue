@@ -29,7 +29,7 @@
                 </div>
                 <div v-else class="nickname van-ellipsis">{{$store.state.user.nickname}}</div>
             </div>
-            <div class="user--info-right">
+            <div class="user--info-right" @click="()=>{$router.push({name:'UserInfo'})}">
                 <van-image class="avatar" round fit="cover"
                            :src="!status.login?'':$store.state.user.avatar">
                     <template slot="error">
@@ -55,7 +55,7 @@
         <div class="menu-list">
             <van-cell size="large" is-link @click="()=>{$router.push({name:'UserInfo'})}">
                 <div slot="icon" style="padding-right: 10px;">
-                    <van-icon color="#009afe" name="like-o" size="16" style="margin-top: 4px;"/>
+                    <van-icon color="#009afe" name="user-o" size="16" style="margin-top: 4px;"/>
                 </div>
                 <div slot="title" style="font-size: 14px;font-weight: 500;">
                     个人信息
@@ -63,21 +63,24 @@
             </van-cell>
             <van-cell size="large" is-link>
                 <div slot="icon" style="padding-right: 10px;">
-                    <van-icon color="#009afe" name="like-o" size="16" style="margin-top: 4px;"/>
+                    <van-icon color="#009afe" name="records" size="16" style="margin-top: 4px;"/>
                 </div>
                 <div slot="title" style="font-size: 14px;font-weight: 500;">
                     我的评价
                 </div>
             </van-cell>
-            <van-cell size="large" is-link>
+            <van-cell size="large" is-link @click="checkVersionUpdate"
+                      :style="status.getAppVersion?`pointer-events: none;filter: grayscale(100%);`:''">
                 <div slot="icon" style="padding-right: 10px;">
-                    <van-icon color="#009afe" name="like-o" size="16" style="margin-top: 4px;"/>
+                    <van-icon color="#009afe" name="question-o" size="16" style="margin-top: 4px;"/>
                 </div>
                 <div slot="title" style="font-size: 14px;font-weight: 500;">
                     关于
                 </div>
                 <div slot="default">
                     <van-tag round type="primary" v-show="status.newVersion">有新版本!</van-tag>
+                    <van-loading v-show="status.getAppVersion" type="spinner" color="#1989fa" size="20px"
+                                 style="display: inline-block;"/>
                     {{$store.state.app.appVersion}}
                 </div>
             </van-cell>
@@ -92,7 +95,7 @@
     import {plusReady} from "@/utils/native";
     import AppModule from "@/store/modules/app";
 
-    @Component
+    @Component({components: {}})
     export default class User extends Vue {
         protected nav: any = {
             title: '',
@@ -100,7 +103,8 @@
         };
         status: any = {
             login: this.$store.state.user.isLogin,
-            newVersion: false
+            newVersion: false,
+            getAppVersion: false
         }
         version: any = null;
 
@@ -121,65 +125,9 @@
             })
         }
 
-        handleUpdate() {
-            let appUrl: string = 'http://qiandun.qiyundata.cn/images/2020-01-08/lmj.wgt'
-            let _this = this;
-            dowload(appUrl);
 
-            // 下载更新文件
-            function dowload(url: string) {
-                let downloadTask = plus.downloader.createDownload(
-                    url,
-                    {
-                        filename: "_downloads/"
-                    },
-                    function (download: any, status: any) {
-                        Toast.loading('下载中')
-                        if (status == 200) {
-                            console.log("下载成功" + download.filename)
-                            Toast.loading('正在安装…')
-                            installWgt(download.filename)
-                        } else {
-                            console.log("下载失败")
-                        }
-                    }
-                )
-
-                downloadTask.addEventListener(
-                    "statechanged",
-                    (download: any, status: any) => {
-                        if (download.totalSize != 0 && download.downloadedSize) {
-                            // _this.updateSchedule = ((download.downloadedSize / download.totalSize) * 100).toFixed(1) + '%';
-                        } else {
-                            // _this.updateSchedule = '0%';
-                        }
-                        // Toast.loading(`${download.downloadedSize}/${download.totalSize}`)
-                        // toast.txt =  + "/" + download.totalSize
-//              console.log(download.downloadedSize + "/" + download.totalSize)
-                    },
-                    false
-                )
-
-                downloadTask.start()
-            }
-
-            // 更新应用wgt资源
-            function installWgt(path: string) {
-                plus.runtime.install(path, {force: true},
-                    function () {
-                        console.log("安装wgt文件成功！");
-                        plus.nativeUI.alert("应用更新完成！", function () {
-                            plus.runtime.restart();
-                        })
-                        Toast.clear()
-                    },
-                    function (e: any) {
-//          plus.nativeUI.closeWaiting();
-                        console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
-                        Toast.clear();
-                        plus.nativeUI.alert("安装wgt文件失败[" + e.code + "]：" + e.message);
-                    });
-            }
+        async checkVersionUpdate() {
+            this.$router.push({name: 'update'})
         }
 
         rightClick(icon: string) {
@@ -200,16 +148,30 @@
 
         async getAppVersion() {
             try {
+                this.status.getAppVersion = true;
                 const res: any = await AppAPI.getAppStatus();
-                this.version = res.appVersion;
-                this.status.newVersion = this.$store.state.app.appVersion !== this.version;
+                if (res.code !== 400) {
+                    this.version = res.appVersion;
+                    this.status.newVersion = this.$store.state.app.appVersion !== this.version;
+                    if (this.status.newVersion) {
+                        AppModule.setIsUpload(true);
+                        AppModule.setUploadApp({
+                            newAppVersion: res.appVersion,
+                            newAppUrl: res.appDownloadLink
+                        });
+                    }
+                    this.status.getAppVersion = false;
+                } else {
+                    this.status.getAppVersion = false;
+                    throw Error(res.msg)
+                }
             } catch (e) {
                 throw e
             }
         }
 
         destroyed() {
-            window.removeEventListener('scroll', this.scrollTo)
+            window.removeEventListener('scroll', this.scrollTo);
             Toast.clear(true);
         }
     }
@@ -276,7 +238,7 @@
         }
 
         .user--info-un-login {
-            height: 75px !important;
+            height: 85px !important;
         }
 
         .ad {

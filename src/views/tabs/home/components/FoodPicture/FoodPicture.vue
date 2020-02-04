@@ -5,7 +5,7 @@
                        radius="5px 5px 0 0" class="picture--detail" fit="cover"/>
             <div class="food--content">
                 <div class="food--content--desc">
-                    <div class="food--name">{{prop.foodName}}</div>
+                    <div class="food--name van-ellipsis">{{prop.foodName}}</div>
                     <div class="food--price_and_tag">
                         {{prop.price&&`￥${prop.price}元`}}
                     </div>
@@ -20,7 +20,7 @@
                        radius="5px 5px 0 0" class="picture--detail" fit="cover"/>
             <div class="food--content">
                 <div class="food--content--desc">
-                    <div class="food--name">{{prop.foodName}}</div>
+                    <div class="food--name van-ellipsis">{{prop.foodName}}</div>
                     <div class="food--price_and_tag">
                         {{prop.price&&`￥${prop.price}元`}}
                     </div>
@@ -35,7 +35,7 @@
                        radius="5px 5px 0 0" class="picture--detail" fit="cover"/>
             <div class="food--content">
                 <div class="food--content--desc">
-                    <div class="food--name">{{prop.foodName}}</div>
+                    <div class="food--name van-ellipsis">{{prop.foodName}}</div>
                     <div class="food--monthly_sales_volume">
                         {{prop.monthlySalesVolume&&`月售${prop.monthlySalesVolume}`}}
                     </div>

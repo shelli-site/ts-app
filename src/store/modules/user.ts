@@ -7,10 +7,11 @@ import AppAPI from '@/api/app/app';
 export interface UserState {
     isLogin: boolean,
     token: string,
-    version: string,
     username: string,
     nickname: string,
     avatar: string,
+    email: string,
+    phone: string,
     roles: string[],
 }
 
@@ -19,7 +20,6 @@ export class User extends VuexModule implements UserState {
     isLogin: boolean = false;
     navHeight: number = 60;
     token: string = '';
-    version: string = '';
     username: string = '';
     nickname: string = '';
     email: string = '';
@@ -85,6 +85,12 @@ export class User extends VuexModule implements UserState {
             throw e
         }
 
+    }
+
+    @Mutation
+    loginOut() {
+        this.isLogin = false;
+        setToken('');
     }
 
     @Mutation

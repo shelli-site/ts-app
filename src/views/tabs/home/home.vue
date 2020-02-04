@@ -73,7 +73,8 @@
                     <div class="food-list">
                         <van-row class="list-group-content">
                             <template v-for="(category, categoryIndex) in foodData.categoryList">
-                                <van-col :span="24" :key="`category-${categoryIndex}`" class="list-group-title">
+                                <van-col v-if="category.foodList.length>0" :span="24" :key="`category-${categoryIndex}`"
+                                         class="list-group-title">
                                     {{category.categoryName}}
                                 </van-col>
                                 <food-picture v-for="(food, foodIndex) in category.foodList"
@@ -101,6 +102,7 @@
     import FoodTabs from "@/views/tabs/home/components/food-tabs/FoodTabs.vue";
     import TabItem from "@/views/tabs/home/components/food-tabs/TabItem.vue";
     import FoodPicture from "@/views/tabs/home/components/FoodPicture/FoodPicture.vue";
+    import HomeAPI from '@/api/app/home';
 
     @Component({
         components: {FoodTabs, TabItem, FoodPicture},
@@ -121,92 +123,32 @@
         };
         backgroundImg: any = null;
 
-        mounted() {
-            this.$elLoading();
-            this.backgroundImg = (this.$refs['backgroundImg'] as any);
-            this.foodData.categoryList = [
-                {
-                    categoryName: '商家推荐',
-                    foodList: [
-                        {
-                            span: 24,
-                            pictureUrl: 'https://bkimg.cdn.bcebos.com/pic/f2deb48f8c5494ee95c8197a21f5e0fe98257eee?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2U5Mg==,xp_5,yp_5',
-                            foodName: '回锅肉',
-                            monthlySalesVolume: '8',
-                            price: 25.01,
-                            tags: []
-                        },
-                        {
-                            span: 24,
-                            pictureUrl: 'http://cp1.douguo.com/upload/caiku/1/9/1/yuan_19bd040d75eaba6895fe47d2d131dbf1.jpg',
-                            foodName: '鱼香茄子',
-                            price: 12.01,
-                            tags: []
-                        },
-                        {
-                            span: 24,
-                            pictureUrl: 'http://p1.qhimgs4.com/t01ed41e854619b80d5.jpg',
-                            foodName: '土豆鸡块',
-                            price: 25.01,
-                            tags: []
+        async mounted() {
+            await this.getHomeFoodList();
+            window.addEventListener('scroll', this.scrollTo)
+            // this.scrollTo();
+        }
+
+        async getHomeFoodList() {
+            try {
+                this.$elLoading();
+                this.backgroundImg = (this.$refs['backgroundImg'] as any);
+                const res: any = await HomeAPI.getHomeFood();
+                this.foodData.categoryList = res.filter((c: any) => c.foodList.length > 0).map((category: any, index: number) => ({
+                    categoryId: category.categoryId,
+                    categoryName: category.categoryName,
+                    foodList: category.foodList.map((food: any) => ({
+                        ...food, ...{
+                            span: (index === 0 || index === 1) ? (24 / (index + 1)) : 8
                         }
-                    ]
-                },
-                {
-                    categoryName: '爆辣',
-                    foodList: [
-                        {
-                            span: 12,
-                            pictureUrl: 'https://bkimg.cdn.bcebos.com/pic/f2deb48f8c5494ee95c8197a21f5e0fe98257eee?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2U5Mg==,xp_5,yp_5',
-                            foodName: '回锅肉',
-                            monthlySalesVolume: '8',
-                            price: 25.01,
-                            tags: []
-                        },
-                        {
-                            span: 12,
-                            pictureUrl: 'http://cp1.douguo.com/upload/caiku/1/9/1/yuan_19bd040d75eaba6895fe47d2d131dbf1.jpg',
-                            foodName: '鱼香茄子',
-                            price: 12.01,
-                            tags: []
-                        },
-                    ]
-                },
-                {
-                    categoryName: '炒鸡辣',
-                    foodList: [
-                        {
-                            span: 8,
-                            pictureUrl: 'https://bkimg.cdn.bcebos.com/pic/f2deb48f8c5494ee95c8197a21f5e0fe98257eee?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2U5Mg==,xp_5,yp_5',
-                            foodName: '回锅肉',
-                            monthlySalesVolume: '8',
-                            price: 25.01,
-                            tags: []
-                        },
-                        {
-                            span: 8,
-                            pictureUrl: 'http://cp1.douguo.com/upload/caiku/1/9/1/yuan_19bd040d75eaba6895fe47d2d131dbf1.jpg',
-                            foodName: '鱼香茄子',
-                            price: 12.01,
-                            tags: []
-                        },
-                        {
-                            span: 8,
-                            pictureUrl: 'http://p1.qhimgs4.com/t01ed41e854619b80d5.jpg',
-                            foodName: '土豆鸡块',
-                            price: 25.01,
-                            tags: []
-                        }
-                    ]
-                },
-            ];
-            setTimeout(() => {
+                    }))
+                }));
                 this.$elLoading().hide();
                 this.style.navBarBackgroundColor = 'rgba(255,255,255,0)'
                 this.style.navBarIconColor = '#ffffff'
-            }, 1200)
-            window.addEventListener('scroll', this.scrollTo)
-            // this.scrollTo();
+            } catch (e) {
+                throw e;
+            }
         }
 
         destroyed() {

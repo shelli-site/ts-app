@@ -33,7 +33,12 @@ export default [
         path: '/UserInfo',
         name: 'UserInfo',
         component: () => import(/* webpackChunkName: "UserInfo" */'../views/auth/UserInfo/UserInfo.vue')
-    }
+    },
+    {
+        path: '/update',
+        name: 'update',
+        component: () => import(/* webpackChunkName: "update" */'../views/update/update.vue')
+    },
 
 ]
 

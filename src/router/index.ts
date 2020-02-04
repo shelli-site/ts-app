@@ -21,6 +21,8 @@ router.beforeEach(async (to: any, from, next) => {
         if (isInclude) {// 确认通往需要权限的页面
             next({name: 'Login', query: {to: to.name}});
             return
+        } else {
+            UserModule.loginOut();
         }
     } else {
         if (isUserLoading === false) {

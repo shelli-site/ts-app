@@ -6,10 +6,10 @@ import './registerServiceWorker'
 import 'lib-flexible/flexible.js'
 // @ts-ignore
 import Navigation from 'vue-navigation'
-import Vant from 'vant';
+import Vant, {Toast} from 'vant';
 import 'vant/lib/index.css';
 import 'vant/lib/icon/local.css';
-import '@/assets/icon/iconfont.js'
+import '@/assets/icon/iconfont.js';
 import '@/style/index.css'
 import '@/components/icon'
 
@@ -33,6 +33,10 @@ import 'element-ui/lib/theme-chalk/base.css';
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
 
 Vue.component(CollapseTransition.name, CollapseTransition)
+
+// 将所有 loading Toast 设置为背景不可点击 (2.2.10 版本开始支持)
+// @ts-ignore
+Toast.setDefaultOptions('loading', { forbidClick: true });
 
 import Loading from "@/components/loading"
 

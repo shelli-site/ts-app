@@ -25,7 +25,8 @@ instance.interceptors.response.use(
     error => {
         if (!error.response) {
             return {
-                code: 400
+                code: 400,
+                msg: error.message
             }
         }
         switch (error.response.status) {
