@@ -31,7 +31,7 @@
             </div>
             <div class="user--info-right" @click="()=>{$router.push({name:'UserInfo'})}">
                 <van-image class="avatar" round fit="cover"
-                           :src="!status.login?'':$store.state.user.avatar">
+                           :src="avatar">
                     <template slot="error">
                         <img src="img/default-avatar.svg" style="width: 100%;height: 100%">
                     </template>
@@ -107,6 +107,10 @@
             getAppVersion: false
         }
         version: any = null;
+
+        get avatar() {
+            return !this.status.login ? '' : process.env.VUE_APP_IMAGE + this.$store.state.user.avatar;
+        }
 
         created() {
             this.getAppVersion();

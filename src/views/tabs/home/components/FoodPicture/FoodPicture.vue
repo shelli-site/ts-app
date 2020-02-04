@@ -11,7 +11,8 @@
                     </div>
                 </div>
                 <div class="food--content--add-button">
-                    <van-button class="add--button" icon="plus" color="#ff5e09" round size="small"/>
+                    <van-button class="add--button" icon="plus" color="#ff5e09" round size="small"
+                                @click="addFood2Shopping()"/>
                 </div>
             </div>
         </div>
@@ -26,7 +27,8 @@
                     </div>
                 </div>
                 <div class="food--content--add-button">
-                    <van-button class="add--button" icon="plus" color="#ff5e09" round size="mini"/>
+                    <van-button class="add--button" icon="plus" color="#ff5e09" round size="mini"
+                                @click="addFood2Shopping()"/>
                 </div>
             </div>
         </div>
@@ -45,7 +47,8 @@
                     </div>
                 </div>
                 <div class="food--content--add-button">
-                    <van-button class="add--button" icon="plus" color="#ff5e09" round size="mini"/>
+                    <van-button class="add--button" icon="plus" color="#ff5e09" round size="mini"
+                                @click="addFood2Shopping()"/>
                 </div>
             </div>
         </div>
@@ -53,6 +56,8 @@
 </template>
 
 <script>
+    import {Food, ShoppingModule} from "../../../../../store/modules/shopping";
+
     export default {
         name: "FoodPicture",
         props: {
@@ -60,12 +65,27 @@
                 default: () => ({
                     span: 24,
                     pictureUrl: '',
+                    foodId: 0,
                     foodName: '',
-                    price: '',
+                    price: 0.01,
                     monthlySalesVolume: '',
                     tags: []
                 }),
                 type: Object
+            }
+        },
+        methods: {
+            addFood2Shopping() {
+                let food = new Food();
+                food.count = 1;
+                food.food = {
+                    id: this.prop.foodId,
+                    name: this.prop.foodName,
+                    picture: this.prop.pictureUrl,
+                    price: this.prop.price,
+                    extra: {}
+                }
+                ShoppingModule.addFood(food);
             }
         }
     }

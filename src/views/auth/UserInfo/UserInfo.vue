@@ -16,7 +16,8 @@
                         <van-image
                                 width="60"
                                 height="60"
-                                :src="$store.state.user.avatar"
+                                radius="4px"
+                                :src="avatar"
                         />
                     </div>
                 </van-cell>
@@ -43,6 +44,9 @@
             newVersion: false,
             progressBar: 0
         };
+        get avatar(){
+            return process.env.VUE_APP_IMAGE+this.$store.state.user.avatar;
+        }
     }
 </script>
 

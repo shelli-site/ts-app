@@ -94,6 +94,7 @@
                 </tab-item>
             </food-tabs><!--tab 分类-->
         </div>
+        <shopping-cart></shopping-cart>
     </div>
 </template>
 
@@ -103,9 +104,10 @@
     import TabItem from "@/views/tabs/home/components/food-tabs/TabItem.vue";
     import FoodPicture from "@/views/tabs/home/components/FoodPicture/FoodPicture.vue";
     import HomeAPI from '@/api/app/home';
+    import ShoppingCart from "@/views/tabs/home/components/ShoppingCart/ShoppingCart.vue";
 
     @Component({
-        components: {FoodTabs, TabItem, FoodPicture},
+        components: {FoodTabs, TabItem, FoodPicture, ShoppingCart},
     })
     export default class Home extends Vue {
         protected form: any = {search: ''};
