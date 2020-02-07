@@ -63,9 +63,10 @@
                     <div class="vip-ad-desc">预计每单预计省4.86元，享3大会员特权</div>
                 </div>
             </div><!--标题块-->
-            <div class="dining-mode">
+            <div class="dining-mode" @click="diningMode = true">
                 <van-icon name="column" size="0.5rem" color="#c8c8c8" style="margin-right: 10px"/>
-                <span style="flex: 1">堂食，8号桌</span>
+                <span style="flex: 1">{{$store.state.shopping.diningModeData.mode}}
+                    <template v-if="$store.state.shopping.diningModeData.position">，{{$store.state.shopping.diningModeData.position}}号桌</template></span>
                 <van-icon name="arrow" size="0.35rem" color="#c8c8c8"/>
             </div><!--就餐方式-->
             <food-tabs v-model="activeTab">
@@ -94,7 +95,26 @@
                 </tab-item>
             </food-tabs><!--tab 分类-->
         </div>
-        <shopping-cart></shopping-cart>
+        <shopping-cart @statusChange="statusChange"/>
+        <van-dialog v-model="diningMode" title="请选择就餐方式" show-cancel-button :before-close="validation"
+                    @open="dialogOnOpen" @close="dialogOnClose" @confirm="dialogOnConfirm">
+            <div class="dining-mode-dialog van-sku-group-container">
+                <div class="van-sku-row van-hairline--bottom">
+                    <div class="van-sku-row__title">就餐方式</div>
+                    <span v-for="(modeName, index) in diningModeConf.mode" :key="index"
+                          :class="['van-sku-row__item',{'van-sku-row__item--active':diningModeData.mode===modeName}]"
+                          @click="()=>{diningModeData.mode=modeName;if(modeName==='打包')diningModeData.position=0;}">
+                        <span class="van-sku-row__item-name">{{modeName}}</span></span>
+                </div>
+                <div class="van-sku-row van-hairline--bottom">
+                    <div class="van-sku-row__title">位置</div>
+                    <span v-for="(positionNumber, index) in diningModeConf.position" :key="index"
+                          :class="['van-sku-row__item',{'van-sku-row__item--active':diningModeData.position===positionNumber},{'van-sku-row__item--disabled':diningModeData.mode==='打包'}]"
+                          @click="()=>{diningModeData.position=positionNumber;}">
+                        <span class="van-sku-row__item-name">{{positionNumber}}</span></span>
+                </div>
+            </div>
+        </van-dialog>
     </div>
 </template>
 
@@ -105,9 +125,13 @@
     import FoodPicture from "@/views/tabs/home/components/FoodPicture/FoodPicture.vue";
     import HomeAPI from '@/api/app/home';
     import ShoppingCart from "@/views/tabs/home/components/ShoppingCart/ShoppingCart.vue";
+    import {Dialog, Toast} from 'vant';
+    import PopupModule from "@/store/modules/popup";
+    import ShoppingModule from "@/store/modules/shopping";
 
     @Component({
-        components: {FoodTabs, TabItem, FoodPicture, ShoppingCart},
+        // @ts-ignore
+        components: {FoodTabs, TabItem, FoodPicture, ShoppingCart, [Dialog.Component.name]: Dialog.Component},
     })
     export default class Home extends Vue {
         protected form: any = {search: ''};
@@ -124,6 +148,12 @@
             categoryList: []
         };
         backgroundImg: any = null;
+        diningMode: boolean = false;
+        diningModeData: any = {};
+        diningModeConf: any = {
+            mode: ["堂食", "打包"],
+            position: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        };
 
         async mounted() {
             await this.getHomeFoodList();
@@ -172,6 +202,49 @@
                 this.style.navBarBackgroundImage = 'linear-gradient(#ffffff, #f8f8f8)';
             }
         }
+
+        // @Watch('$store.state.popup.statusChange')
+        statusChange(value: boolean) {
+            if (value) {
+                if (PopupModule.popup[this.$route.name as string].dialog) {
+                    if (PopupModule.popup[this.$route.name as string].dialog.show === false) {
+                        this.diningMode = false;
+                    }
+                }
+                PopupModule.statusChanged();
+            }
+        }
+
+        dialogOnOpen() {
+            PopupModule.addPopup({
+                route: this.$route, conf: {
+                    dialog: {/*就餐方式弹框*/
+                        priority: 20,
+                        show: true
+                    }
+                }
+            });
+            this.diningModeData = JSON.parse(JSON.stringify(this.$store.state.shopping.diningModeData));
+        }
+
+        dialogOnClose() {
+            PopupModule.closePopup({route: this.$route, popupName: 'dialog'});
+        }
+
+        dialogOnConfirm() {
+            ShoppingModule.setDiningModeData(this.diningModeData);
+        }
+
+        validation(action: any, done: Function) {
+            if (action === 'confirm' && this.diningModeData.mode === '堂食') {
+                if (!this.diningModeConf.position.includes(this.diningModeData.position)) {
+                    done(false);
+                    Toast("请选择位置桌号！");
+                }
+            }
+            done();
+        }
+
     }
 </script>
 
@@ -385,5 +458,27 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .dining-mode-dialog {
+        height: 200px;
+
+        .dining-mode-dialog-title {
+            padding-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .dining-mode-name {
+            display: inline-block;
+            margin: 0 12px 12px 0;
+            overflow: hidden;
+            vertical-align: middle;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            line-height: 16px;
+            padding: 8px;
+            color: #323233;
+        }
     }
 </style>

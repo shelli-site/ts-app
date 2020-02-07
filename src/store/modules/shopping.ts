@@ -20,6 +20,10 @@ export class Food {
 export class ShoppingCart extends VuexModule implements ShoppingState {
     status: string = 'shopping';
     foodList: Food[] = [];
+    diningModeData: any = {
+        mode: "堂食",
+        position: 0
+    };
 
     constructor() {
         super(VuexModule);
@@ -39,6 +43,23 @@ export class ShoppingCart extends VuexModule implements ShoppingState {
         !isExist && foodList.push(food);
         this.foodList = foodList;
         return true;
+    }
+
+    @Mutation
+    refreshFoodList() {
+        this.foodList = this.foodList.filter((food: Food) => food.count !== 0);
+    }
+
+    @Mutation
+    clearShopping() {
+        this.foodList = [];
+    }
+
+    @Mutation
+    setDiningModeData(diningModeData: any) {
+        this.diningModeData = {
+            ...this.diningModeData, ...diningModeData
+        };
     }
 
     @Mutation

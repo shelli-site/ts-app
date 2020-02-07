@@ -39,11 +39,6 @@
             title: '个人信息',
             height: 45
         };
-        status: any = {
-            getAppVersion: false,
-            newVersion: false,
-            progressBar: 0
-        };
         get avatar(){
             return process.env.VUE_APP_IMAGE+this.$store.state.user.avatar;
         }

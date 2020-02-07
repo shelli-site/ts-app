@@ -8,10 +8,11 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from 'vue-property-decorator'
+    import {Component, Vue, Watch} from 'vue-property-decorator'
     import {plusReady} from '@/utils/native'
     import UserModule from "@/store/modules/user";
     import AppModule from "@/store/modules/app";
+    import PopupModule from "@/store/modules/popup";
 
     @Component
     export default class App extends Vue {
@@ -28,6 +29,11 @@
                 // 监听返回键
                 let backButtonPress = 0;
                 plus.key.addEventListener('backbutton', () => {
+                    PopupModule.closePriorityFirst(this.$route);
+                    if (PopupModule.shieldBack) {
+                        return false
+                    }
+
                     // 双击退出程序
                     let routeName = this.$route.name;
                     let whitelist = ['Login'];
@@ -120,6 +126,11 @@
                     }
                 }
             })
+        }
+
+        @Watch('$route')
+        onWatchRouter(to: any, from: any) {
+            console.log(`from ${from.name} to ${to.name}`);
         }
     }
 

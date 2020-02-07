@@ -35,6 +35,11 @@ export default [
         component: () => import(/* webpackChunkName: "UserInfo" */'../views/auth/UserInfo/UserInfo.vue')
     },
     {
+        path: '/SubmitOrder',
+        name: 'SubmitOrder',
+        component: () => import(/* webpackChunkName: "SubmitOrder" */'../views/order/SubmitOrder.vue')
+    },
+    {
         path: '/update',
         name: 'update',
         component: () => import(/* webpackChunkName: "update" */'../views/update/update.vue')
