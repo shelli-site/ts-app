@@ -27,6 +27,7 @@ export class ShoppingCart extends VuexModule implements ShoppingState {
 
     constructor() {
         super(VuexModule);
+        this.foodList = JSON.parse(localStorage['foodList'] || "[]");
     }
 
     @Mutation

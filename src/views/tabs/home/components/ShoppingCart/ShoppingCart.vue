@@ -14,22 +14,27 @@
                 <span class="shopping-clear" @click="clearFoodList">清空</span>
             </div>
             <div class="food-list">
-                <div v-for="(food, index) in $store.state.shopping.foodList" :key="index" class="food-list-item">
-                    <template v-if="food.count">
-                        <div class="food-picture">
-                            <van-image :src="food.food.picture" width="60" height="60" style="border: 1px solid #fcfcfc"
-                                       radius="4px" fit="cover"/>
-                        </div>
-                        <div class="food-msg">
-                            <div class="food-name">{{food.food.name}}</div>
-                            <div class="food-price">￥<span>{{food.food.price}}</span></div>
-                        </div>
-                        <div class="food-count">
-                            <van-stepper v-model="food.count" min="0" integer input-width="35px" button-size="22px"
-                                         :key="food.food.name" @change="foodListCountsChange"/>
-                        </div>
+                <!--<div v-for="(food, index) in $store.state.shopping.foodList" :key="index" class="food-list-item">
+                    <div class="food-picture">
+                        <van-image :src="food.food.picture" width="60" height="60" style="border: 1px solid #fcfcfc"
+                                   radius="4px" fit="cover"/>
+                    </div>
+                    <div class="food-msg">
+                        <div class="food-name">{{food.food.name}}</div>
+                        <div class="food-price">￥<span>{{food.food.price}}</span></div>
+                    </div>
+                    <div class="food-count">
+                        <van-stepper v-model="food.count" min="0" integer input-width="35px" button-size="22px"
+                                     :key="food.food.name" @change="foodListCountsChange"/>
+                    </div>
+                </div>-->
+                <food-card v-for="(food, index) in $store.state.shopping.foodList" :key="index" :counts="food.count"
+                           :food="food.food">
+                    <template slot="count">
+                        <van-stepper v-model="food.count" min="0" integer input-width="35px" button-size="22px"
+                                     :key="food.food.name" @change="foodListCountsChange"/>
                     </template>
-                </div>
+                </food-card>
             </div>
             <div class="settlement-bar">
                 <div class="settlement-icon">
@@ -57,9 +62,11 @@
     import {ShoppingModule} from "../../../../../store/modules/shopping";
     import {Toast, Dialog} from "vant";
     import {PopupModule} from "../../../../../store/modules/popup";
+    import FoodCard from "../FoodCard/FoodCard.vue";
 
     export default {
         name: "ShoppingCart",
+        components: {FoodCard},
         computed: {
             statisticsFood() {
                 let counts = ShoppingModule.foodList.reduce((previous, current) => {

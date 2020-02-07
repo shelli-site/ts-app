@@ -132,6 +132,11 @@
         onWatchRouter(to: any, from: any) {
             console.log(`from ${from.name} to ${to.name}`);
         }
+
+        @Watch('$store.state.shopping.foodList')
+        onWatchFoodList(foodList: any[]) {
+            localStorage['foodList'] = JSON.stringify(foodList);
+        }
     }
 
 </script>
