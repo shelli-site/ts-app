@@ -2,8 +2,8 @@
   "id": "lmj",
   "name": "智能点单",
   "version": {
-    "name": "1.0.1",
-    "code": 101
+    "name": "1.0.2",
+    "code": 102
   },
   "description" : "刘梦节的毕业设计",
   "permissions": {},
