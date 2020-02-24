@@ -52,7 +52,7 @@ export class MyPopup extends VuexModule implements PopupState {
     @Mutation //关闭最外层弹出
     closePriorityFirst(route: any) {
         this.shieldBack = false;
-        let keys: string[] = Object.keys(this.popup[route.name]);
+        let keys: string[] = Object.keys(this.popup[route.name] || {});
         keys.sort((key1: string, key2: string) => {
             return this.popup[route.name][key2].priority - this.popup[route.name][key1].priority;
         });
