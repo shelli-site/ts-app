@@ -18,6 +18,8 @@ export class Food {
 
 @Module({dynamic: true, store, name: 'shopping'})
 export class ShoppingCart extends VuexModule implements ShoppingState {
+    homeCache: boolean = false;
+    cacheData: any = {};
     status: string = 'shopping';
     foodList: Food[] = [];
     diningModeData: any = {
@@ -61,6 +63,29 @@ export class ShoppingCart extends VuexModule implements ShoppingState {
         this.diningModeData = {
             ...this.diningModeData, ...diningModeData
         };
+    }
+
+    @Mutation
+    setCache(data: any) {
+        this.homeCache = true;
+        this.cacheData = data;
+    }
+
+    @Mutation
+    loadCache() {
+        this.homeCache = false;
+        this.cacheData = {};
+    }
+
+    @Mutation
+    submit() {
+        this.status = 'submit';
+    }
+
+    @Mutation
+    paid() {
+        this.foodList = [];
+        this.status = 'paiding';
     }
 
     @Mutation

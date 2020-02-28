@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import AppModule from "@/store/modules/app";
-import UserModule from "@/store/modules/user";
+import {getToken} from "@/utils/auth";
 
 let instance = Axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
@@ -12,7 +12,7 @@ let instance = Axios.create({
 
 // 接口请求拦截器
 instance.interceptors.request.use(request => {
-    request.headers.Authorization = UserModule.token;
+    request.headers.Authorization = getToken();
     request.headers.AppVersion = AppModule.appVersion;
     return request
 });

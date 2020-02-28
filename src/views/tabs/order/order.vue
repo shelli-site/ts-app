@@ -10,187 +10,25 @@
                      @click-right="onClickRight"
                      fixed>
             <span slot="title" :style="{opacity:nav.opacity,lineHeight:nav.height+'px'}">{{nav.title}}</span>
-            <span slot="right" style="font-weight: 500">其他订单</span>
+            <span v-if="$store.state.user.isLogin" slot="right" style="font-weight: 500">其他订单</span>
         </van-nav-bar>
         <div class="bg-nav"></div>
-        <div class="bg-t"></div>
-        <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refresh">
+        <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="refresh"
+                          :disabled="!$store.state.user.isLogin">
             <div class="order-list">
                 <div class="list-title">我的订单</div>
-                <div class="list-item">
-                    <div class="list-left">
-                        <div class="img"></div>
-                    </div>
-                    <div class="list-right">
-                        <div class="title">
-                            <span class="title__left">圣克士炸鸡汉堡(锦江店)
-                            <van-icon name="arrow" color="#7f7f7f"></van-icon></span>
-                            <span class="title__right">已送达</span>
-                        </div>
-                        <div class="time">2018-09-21 11:29</div>
-                        <div class="des">
-                            <span class="des__left">巨无霸汉堡 等3件</span>
-                            <span class="des__right">￥15.74</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <div class="list-left">
-                        <div class="img"></div>
-                    </div>
-                    <div class="list-right">
-                        <div class="title">
-                            <span class="title__left">圣克士炸鸡汉堡(锦江店)
-                            <van-icon name="arrow" color="#7f7f7f"></van-icon></span>
-                            <span class="title__right">已送达</span>
-                        </div>
-                        <div class="time">2018-09-21 11:29</div>
-                        <div class="des">
-                            <span class="des__left">巨无霸汉堡 等3件</span>
-                            <span class="des__right">￥15.74</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <div class="list-left">
-                        <div class="img"></div>
-                    </div>
-                    <div class="list-right">
-                        <div class="title">
-                            <span class="title__left">圣克士炸鸡汉堡(锦江店)
-                            <van-icon name="arrow" color="#7f7f7f"></van-icon></span>
-                            <span class="title__right">已送达</span>
-                        </div>
-                        <div class="time">2018-09-21 11:29</div>
-                        <div class="des">
-                            <span class="des__left">巨无霸汉堡 等3件</span>
-                            <span class="des__right">￥15.74</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <div class="list-left">
-                        <div class="img"></div>
-                    </div>
-                    <div class="list-right">
-                        <div class="title">
-                            <span class="title__left">圣克士炸鸡汉堡(锦江店)
-                            <van-icon name="arrow" color="#7f7f7f"></van-icon></span>
-                            <span class="title__right">已送达</span>
-                        </div>
-                        <div class="time">2018-09-21 11:29</div>
-                        <div class="des">
-                            <span class="des__left">巨无霸汉堡 等3件</span>
-                            <span class="des__right">￥15.74</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <div class="list-left">
-                        <div class="img"></div>
-                    </div>
-                    <div class="list-right">
-                        <div class="title">
-                            <span class="title__left">圣克士炸鸡汉堡(锦江店)
-                            <van-icon name="arrow" color="#7f7f7f"></van-icon></span>
-                            <span class="title__right">已送达</span>
-                        </div>
-                        <div class="time">2018-09-21 11:29</div>
-                        <div class="des">
-                            <span class="des__left">巨无霸汉堡 等3件</span>
-                            <span class="des__right">￥15.74</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <div class="list-left">
-                        <div class="img"></div>
-                    </div>
-                    <div class="list-right">
-                        <div class="title">
-                            <span class="title__left">圣克士炸鸡汉堡(锦江店)
-                            <van-icon name="arrow" color="#7f7f7f"></van-icon></span>
-                            <span class="title__right">已送达</span>
-                        </div>
-                        <div class="time">2018-09-21 11:29</div>
-                        <div class="des">
-                            <span class="des__left">巨无霸汉堡 等3件</span>
-                            <span class="des__right">￥15.74</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <div class="list-left">
-                        <div class="img"></div>
-                    </div>
-                    <div class="list-right">
-                        <div class="title">
-                            <span class="title__left">圣克士炸鸡汉堡(锦江店)
-                            <van-icon name="arrow" color="#7f7f7f"></van-icon></span>
-                            <span class="title__right">已送达</span>
-                        </div>
-                        <div class="time">2018-09-21 11:29</div>
-                        <div class="des">
-                            <span class="des__left">巨无霸汉堡 等3件</span>
-                            <span class="des__right">￥15.74</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <div class="list-left">
-                        <div class="img"></div>
-                    </div>
-                    <div class="list-right">
-                        <div class="title">
-                            <span class="title__left">圣克士炸鸡汉堡(锦江店)
-                            <van-icon name="arrow" color="#7f7f7f"></van-icon></span>
-                            <span class="title__right">已送达</span>
-                        </div>
-                        <div class="time">2018-09-21 11:29</div>
-                        <div class="des">
-                            <span class="des__left">巨无霸汉堡 等3件</span>
-                            <span class="des__right">￥15.74</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <div class="list-left">
-                        <div class="img"></div>
-                    </div>
-                    <div class="list-right">
-                        <div class="title">
-                            <span class="title__left">圣克士炸鸡汉堡(锦江店)
-                            <van-icon name="arrow" color="#7f7f7f"></van-icon></span>
-                            <span class="title__right">已送达</span>
-                        </div>
-                        <div class="time">2018-09-21 11:29</div>
-                        <div class="des">
-                            <span class="des__left">巨无霸汉堡 等3件</span>
-                            <span class="des__right">￥15.74</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <div class="list-left">
-                        <div class="img"></div>
-                    </div>
-                    <div class="list-right">
-                        <div class="title">
-                            <span class="title__left">圣克士炸鸡汉堡(锦江店)
-                            <van-icon name="arrow" color="#7f7f7f"></van-icon></span>
-                            <span class="title__right">已送达</span>
-                        </div>
-                        <div class="time">2018-09-21 11:29</div>
-                        <div class="des">
-                            <span class="des__left">巨无霸汉堡 等3件</span>
-                            <span class="des__right">￥15.74</span>
-                        </div>
-                    </div>
-                </div>
+                <template v-if="$store.state.user.isLogin">
+                    <template v-for="(order, index) in orderList">
+                        <order-item :value="order" :key="index"/>
+                    </template>
+                </template>
+                <un-login v-else tip-text="登陆后查看订单"/>
             </div>
-            <van-divider :style="{ fontSize:'12px',color: '#969799', borderColor: '#969799', padding: '0 16px' }">
+            <van-divider v-if="orderList.length>5 && $store.state.user.isLogin" class="margin-b"
+                         :style="{ fontSize:'12px',color: '#969799', borderColor: '#969799', padding: '0 16px' }">
                 我有底线
             </van-divider>
+            <div v-else class="seize"></div>
         </van-pull-refresh>
     </div>
 </template>
@@ -198,8 +36,11 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import {Toast} from "vant";
+    import OrderItem from "@/views/tabs/order/OrderItem.vue";
+    import UnLogin from "@/components/un-login/un-login.vue";
+    import OrderAPI from "@/api/app/order";
 
-    @Component
+    @Component({components: {OrderItem, UnLogin}})
     export default class Order extends Vue {
         isLoading: boolean = false;
         protected nav: any = {
@@ -207,11 +48,14 @@
             opacity: 0,
             height: 60
         };
-
+        pageNo: number = 1;
+        pageSize: number = 10;
+        orderList: any[] = [];
 
         mounted() {
             window.addEventListener('scroll', this.scrollTo)
-            this.scrollTo()
+            this.scrollTo();
+            this.$store.state.user.isLogin && this.getOrderList();
         }
 
         onClickRight() {
@@ -230,10 +74,24 @@
             }
         }
 
-        onRefresh() {
-            setTimeout(() => {
-                this.isLoading = false;
-            }, 500);
+        async onRefresh() {
+            await this.getOrderList();
+        }
+
+        async getOrderList() {
+            try {
+                this.isLoading = true;
+                const res: any = await OrderAPI.getOrderList({
+                    pageNo: this.pageNo,
+                    pageSize: this.pageSize
+                });
+                this.orderList = res.list;
+                setTimeout(() => {
+                    this.isLoading = false;
+                }, 500);
+            } catch (e) {
+                throw e;
+            }
         }
 
         destroyed() {
@@ -245,28 +103,15 @@
 
 <style lang="scss" scoped>
     .order {
+        height: 100%;
+
         .refresh {
-            min-height: 667px;
+            min-height: calc(100% - 60px); /*px*/
         }
     }
 
     .bg-nav {
         height: 57px;
-    }
-
-    .bg-t {
-        position: absolute;
-        left: 0px;
-        right: 0px;
-        top: 0px;
-        height: 100%;
-        overflow: hidden;
-        z-index: -999;
-        background-color: #f8f8f8;
-    }
-
-    .bg-b {
-
     }
 
     .order-list {
@@ -279,88 +124,14 @@
             padding: 15px 25px;
             background-image: linear-gradient(#ffffff, #f8f8f8);
         }
+    }
 
-        .list-item {
-            background: #ffffff;
-            height: 100px;
-            /*border: 1px solid #d2d2d2; !*px*!*/
-            box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1); /*px*/
-            border-top-width: 0px !important; /*px*/
-            margin: 0 10px 10px 10px;
-            border-radius: 4px;
-            display: flex;
+    .margin-b {
+        margin-bottom: 66px;
+    }
 
-            .list-left {
-                /*width: 50px;*/
-                text-align: center;
-
-                .img {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 5px;
-                    margin: 15px;
-                    background: #f7f7f7;
-                }
-            }
-
-            .list-right {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                margin-right: 15px;
-
-                .title {
-                    padding-top: 15px;
-                    font-size: 14px;
-                    font-weight: 600;
-                    display: flex;
-                    justify-content: space-between;
-
-                    .title__left {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    }
-
-                    .title__right {
-                        font-weight: 400;
-
-                    }
-                }
-
-                .time {
-                    color: #7f7f7f;
-                    display: flex;
-                    align-items: center;
-                    justify-content: left;
-                    height: 30px;
-                    border-bottom: solid 1px #f2f2f2;
-                }
-
-                .des {
-                    flex: 1;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-
-                    .des__left {
-                        font-weight: 500;
-                    }
-
-                    .des__right {
-                        font-weight: 500;
-                    }
-                }
-            }
-        }
+    .seize {
+        margin-bottom: 60px;
     }
 </style>
 
-<style lang="scss">
-    /*.van-nav-bar__title van-ellipsis {*/
-    /*height: 100%;*/
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
-    /*}*/
-</style>

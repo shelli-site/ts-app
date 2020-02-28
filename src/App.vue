@@ -13,6 +13,7 @@
     import UserModule from "@/store/modules/user";
     import AppModule from "@/store/modules/app";
     import PopupModule from "@/store/modules/popup";
+    import InfoModule from "@/store/modules/info";
 
     @Component
     export default class App extends Vue {
@@ -21,6 +22,7 @@
         created() {
             UserModule.init();
             AppModule.init();
+            InfoModule.init();
             let _this = this;
             plusReady(() => {
                 //仅支持竖屏显示
@@ -130,7 +132,7 @@
 
         @Watch('$route')
         onWatchRouter(to: any, from: any) {
-            console.log(`from ${from.name} to ${to.name}`);
+            //console.log(`from ${from.name} to ${to.name}`);
         }
 
         @Watch('$store.state.shopping.foodList')

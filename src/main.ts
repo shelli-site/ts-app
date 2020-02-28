@@ -25,6 +25,11 @@ Router.prototype.push = function push(location:any) {
     // @ts-ignore
     return originalPush.call(this, location).catch((err:any) => err)
 };
+const originalReplace = Router.prototype.replace;
+Router.prototype.replace = function replace(location:any) {
+    // @ts-ignore
+    return originalReplace.call(this, location).catch((err:any) => err)
+};
 
 // fade/zoom 等
 import 'element-ui/lib/theme-chalk/base.css';
@@ -43,8 +48,8 @@ import Loading from "@/components/loading"
 Vue.use(Loading)
 
 Vue.use(Vant);
-Vue.use(Navigation, {router, store})
-Vue.config.productionTip = false
+Vue.use(Navigation, {router, store});
+Vue.config.productionTip = false;
 
 new Vue({
     router,

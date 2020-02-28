@@ -43,6 +43,7 @@ export class MyPopup extends VuexModule implements PopupState {
 
     @Mutation //关闭弹出
     closePopup(params: any = {popupName: '', route: {}}) {
+        // if (!this.popup[params.route.name]) return;
         if (this.popup[params.route.name][params.popupName].show === true) {
             this.popup[params.route.name][params.popupName].show = false;
             this.statusChange = true;

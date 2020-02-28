@@ -74,7 +74,8 @@
                     <div class="food-list">
                         <van-row class="list-group-content">
                             <template v-for="(category, categoryIndex) in foodData.categoryList">
-                                <van-col v-if="category.foodList.length>0" :span="24" :key="`category-${categoryIndex}`"
+                                <van-col v-if="category.foodList.length>0" :span="24"
+                                         :key="`category-${categoryIndex}`"
                                          class="list-group-title">
                                     {{category.categoryName}}
                                 </van-col>
@@ -95,8 +96,8 @@
                 </tab-item>
             </food-tabs><!--tab 分类-->
         </div>
-        <shopping-cart @statusChange="statusChange"/>
-        <dining-mode-dialog :value="diningMode"/>
+        <shopping-cart @statusChange="statusChange" @cache="setFoodListCache"/>
+        <dining-mode-dialog ref="diningModeDialogHome" :value="diningMode"/>
     </div>
 </template>
 
@@ -109,6 +110,7 @@
     import ShoppingCart from "@/views/tabs/home/components/ShoppingCart/ShoppingCart.vue";
     import PopupModule from "@/store/modules/popup";
     import DiningModeDialog from "@/views/tabs/home/components/DiningModeDialog/DiningModeDialog.vue";
+    import ShoppingModule from "@/store/modules/shopping";
 
     @Component({
         components: {
@@ -137,9 +139,15 @@
         diningMode: boolean = false;
 
         async mounted() {
-            await this.getHomeFoodList();
-            window.addEventListener('scroll', this.scrollTo)
-            // this.scrollTo();
+            if (this.$store.state.shopping.homeCache) {
+                this.foodData.categoryList = this.$store.state.shopping.cacheData.categoryList;
+                this.style.navBarBackgroundColor = 'rgba(255,255,255,0)';
+                this.style.navBarIconColor = '#ffffff';
+                ShoppingModule.loadCache();
+            } else {
+                await this.getHomeFoodList();
+            }
+            window.addEventListener('scroll', this.scrollTo);
         }
 
         async getHomeFoodList() {
@@ -184,7 +192,6 @@
             }
         }
 
-        // @Watch('$store.state.popup.statusChange')
         statusChange(value: boolean) {
             if (value) {
                 if (PopupModule.popup[this.$route.name as string].dialog) {
@@ -196,6 +203,13 @@
             }
         }
 
+        setFoodListCache() {
+            ShoppingModule.setCache({
+                ...ShoppingModule.cacheData, ...{
+                    categoryList: this.foodData.categoryList
+                }
+            })
+        }
     }
 </script>
 

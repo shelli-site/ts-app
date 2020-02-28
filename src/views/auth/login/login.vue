@@ -14,7 +14,7 @@
                            style="background-color: #f8f8f8;"/>
             </div>
             <div class="login-btn">
-                <van-button type="info" size="small" :disabled="status.loginBtnDis" :loading="status.isLogining"
+                <van-button type="info" :disabled="status.loginBtnDis" :loading="status.isLogining"
                             loading-type="spinner" loading-text="登录中..."
                             style="width: 100%;letter-spacing: 2px;" @click="userLogin">
                     登录

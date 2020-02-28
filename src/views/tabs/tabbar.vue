@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="padding-bottom: 50px" class="page">
+        <div class="page">
             <router-view></router-view>
         </div>
         <van-tabbar route class="taber" :z-index="10">
@@ -37,9 +37,11 @@
 <style scoped>
     .taber {
         border-top: solid 1px #ebedf0; /*px*/
-        background: #f8f8f8;
+        background: #f6f6f6;
     }
 
     .page {
+        /*padding-bottom: 50px;*/
+        height: calc(100% - 50px);
     }
 </style>

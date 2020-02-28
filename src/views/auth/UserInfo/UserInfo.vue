@@ -27,11 +27,13 @@
                 <van-cell title="手机号" is-link :value="$store.state.user.phone"/>
             </van-cell-group>
         </div>
+        <van-button type="danger" class="login-out" @click="loginOut">退出登录</van-button>
     </div>
 </template>
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
+    import UserModule from "@/store/modules/user";
 
     @Component({components: {}})
     export default class UserInfo extends Vue {
@@ -39,8 +41,14 @@
             title: '个人信息',
             height: 45
         };
-        get avatar(){
-            return process.env.VUE_APP_IMAGE+this.$store.state.user.avatar;
+
+        get avatar() {
+            return process.env.VUE_APP_IMAGE + this.$store.state.user.avatar;
+        }
+
+        loginOut() {
+            UserModule.loginOut();
+            this.$router.go(-1);
         }
     }
 </script>
@@ -56,5 +64,11 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+    }
+
+    .login-out {
+        margin: 10px;
+        width: calc(100% - 20px);
+        border-radius: 5px;
     }
 </style>
