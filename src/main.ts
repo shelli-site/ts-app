@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from '@/router'
 import store from '@/store'
+import filter from '@/filters'
 import './registerServiceWorker'
 import 'lib-flexible/flexible.js'
 // @ts-ignore
@@ -46,7 +47,7 @@ Toast.setDefaultOptions('loading', { forbidClick: true });
 import Loading from "@/components/loading"
 
 Vue.use(Loading)
-
+Vue.use(filter);
 Vue.use(Vant);
 Vue.use(Navigation, {router, store});
 Vue.config.productionTip = false;

@@ -2,7 +2,7 @@
     <div class="un-login">
         <img class="un-login-img" src="img/un-login.png" style="object-fit: cover;"/>
         <div class="tip-text">{{tipText}}</div>
-        <van-button type="info" class="login-btn" @click="toLogin">{{loginText}}</van-button>
+        <van-button tag="span" type="info" class="login-btn" @click="toLogin">{{loginText}}</van-button>
     </div>
 </template>
 

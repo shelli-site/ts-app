@@ -88,11 +88,19 @@
                         </van-divider>
                     </div>
                 </tab-item>
-                <tab-item value="tab2" label="点过的菜">
-                    <div class="empty">暂无点过的菜</div>
+                <tab-item value="tab2" label="评价">
+                    <template v-if="remark.pageTotal!==0">
+                        <remark :remarkList="remark.list"/>
+                        <van-divider v-if="remark.pageTotal>5" class="margin-b"
+                                     :style="{ fontSize:'12px',color: '#969799', borderColor: '#969799', padding: '0 16px' }">
+                            我有底线
+                        </van-divider>
+                        <div v-else class="seize"></div>
+                    </template>
+                    <div v-else class="empty">暂无评价</div>
                 </tab-item>
-                <tab-item value="tab3" label="评价">
-                    <div class="empty">暂无评价</div>
+                <tab-item value="tab3" label="点过的菜">
+                    <div class="empty">暂无点过的菜</div>
                 </tab-item>
             </food-tabs><!--tab 分类-->
         </div>
@@ -106,7 +114,9 @@
     import FoodTabs from "@/views/tabs/home/components/food-tabs/FoodTabs.vue";
     import TabItem from "@/views/tabs/home/components/food-tabs/TabItem.vue";
     import FoodPicture from "@/views/tabs/home/components/FoodPicture/FoodPicture.vue";
+    import Remark from "@/views/tabs/home/components/remark/remark.vue";
     import HomeAPI from '@/api/app/home';
+    import RemarkAPI from '@/api/app/remark';
     import ShoppingCart from "@/views/tabs/home/components/ShoppingCart/ShoppingCart.vue";
     import PopupModule from "@/store/modules/popup";
     import DiningModeDialog from "@/views/tabs/home/components/DiningModeDialog/DiningModeDialog.vue";
@@ -118,7 +128,8 @@
             TabItem,
             FoodPicture,
             ShoppingCart,
-            DiningModeDialog
+            DiningModeDialog,
+            Remark
         },
     })
     export default class Home extends Vue {
@@ -135,6 +146,12 @@
         foodData: any = {
             categoryList: []
         };
+        remark: any = {
+            list: [],
+            pageNo: 1,
+            pageSize: 10,
+            pageTotal: null
+        };
         backgroundImg: any = null;
         diningMode: boolean = false;
 
@@ -147,6 +164,7 @@
             } else {
                 await this.getHomeFoodList();
             }
+            this.getRemarkList();
             window.addEventListener('scroll', this.scrollTo);
         }
 
@@ -167,6 +185,21 @@
                 this.$elLoading().hide();
                 this.style.navBarBackgroundColor = 'rgba(255,255,255,0)'
                 this.style.navBarIconColor = '#ffffff'
+            } catch (e) {
+                throw e;
+            }
+        }
+
+        async getRemarkList() {
+            try {
+                const res: any = await RemarkAPI.getRemarkAllList({
+                    pageNo: 1,
+                    pageSize: 10
+                });
+                this.remark.list = res.list;
+                this.remark.pageNo = res.pageNo;
+                this.remark.pageSize = res.pageSize;
+                this.remark.pageTotal = res.pageTotal;
             } catch (e) {
                 throw e;
             }
@@ -445,5 +478,9 @@
             padding: 8px;
             color: #323233;
         }
+    }
+
+    .seize {
+        margin-bottom: 60px;
     }
 </style>

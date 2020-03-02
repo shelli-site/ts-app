@@ -15,7 +15,7 @@ router.beforeEach(async (to: any, from, next) => {
     if (to.name === 'Login') {
         isUserLoading = false;
     }
-    let blacklist = ['UserInfo'];
+    let blacklist = ['UserInfo', 'SubmitOrder'];
     let isInclude = blacklist.includes(to.name);
     if (!getToken() || getToken() === 'undefined') {
         if (isInclude) {// 确认通往需要权限的页面
