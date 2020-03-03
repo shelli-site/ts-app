@@ -14,6 +14,7 @@
     import AppModule from "@/store/modules/app";
     import PopupModule from "@/store/modules/popup";
     import InfoModule from "@/store/modules/info";
+    import {Toast} from "vant";
 
     @Component
     export default class App extends Vue {
@@ -53,6 +54,8 @@
                         }, 1000);
                         return false
                     }
+                    Toast.clear();
+                    _this.$elLoading().hide();
                     this.$router.go(-1);
                     return false
                 });

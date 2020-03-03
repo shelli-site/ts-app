@@ -7,7 +7,7 @@
                 <div class="food--content--desc">
                     <div class="food--name van-ellipsis">{{prop.foodName}}</div>
                     <div class="food--price_and_tag">
-                        {{prop.price&&`￥${prop.price}元`}}
+                        {{prop.price&&`￥`}}{{prop.price|toDecimal2}}{{prop.price&&`元`}}
                     </div>
                 </div>
                 <div class="food--content--add-button">
@@ -23,7 +23,7 @@
                 <div class="food--content--desc">
                     <div class="food--name van-ellipsis">{{prop.foodName}}</div>
                     <div class="food--price_and_tag">
-                        {{prop.price&&`￥${prop.price}元`}}
+                        {{prop.price&&`￥`}}{{prop.price|toDecimal2}}{{prop.price&&`元`}}
                     </div>
                 </div>
                 <div class="food--content--add-button">
@@ -43,7 +43,7 @@
                     </div>
                     <div class="food--tags"></div>
                     <div class="food--price">
-                        {{prop.price&&`￥${prop.price}元`}}
+                        {{prop.price&&`￥`}}{{prop.price|toDecimal2}}{{prop.price&&`元`}}
                     </div>
                 </div>
                 <div class="food--content--add-button">

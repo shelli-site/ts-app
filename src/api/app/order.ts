@@ -11,6 +11,13 @@ function getOrderList(params: any = {
     })
 }
 
+function getOrder(id: number = 0) {
+    return instance.request({
+        url: `/api/app_order/${id}`,
+        method: "get"
+    })
+}
+
 function submitOrder(data: any = {}) {
     return instance.request({
         url: '/api/app_order',
@@ -26,4 +33,4 @@ function paidOrder(id: number = 0) {
     })
 }
 
-export default {getOrderList, submitOrder, paidOrder}
+export default {getOrderList, submitOrder, paidOrder, getOrder}

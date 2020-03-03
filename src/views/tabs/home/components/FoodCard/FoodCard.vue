@@ -4,15 +4,30 @@
             <van-image :src="food.picture" width="60" height="60" style="border: 1px solid #fcfcfc"
                        radius="4px" fit="cover"/>
         </div>
-        <div class="food-msg">
-            <div class="food-name">{{food.name}}</div>
-            <div class="food-price">￥<span>{{food.price}}</span></div>
-        </div>
-        <div class="food-count">
-            <slot name="count">
-                <div class="count-number">x{{counts}}</div>
-            </slot>
-        </div>
+        <template v-if="mode==='submit'">
+            <div class="food-msg">
+                <div class="food-name">{{food.name}}</div>
+                <div class="food-price">￥<span>{{food.price|toDecimal2}}</span></div>
+            </div>
+            <div class="food-count">
+                <slot name="count">
+                    <div class="count-number">x{{counts}}</div>
+                </slot>
+            </div>
+        </template>
+        <template v-else-if="mode==='detail'">
+            <div class="food-msg">
+                <div class="food-name">{{food.name}}</div>
+                <div class="food-detail-count">
+                    <slot name="count">
+                        <div class="count-number">x{{counts}}</div>
+                    </slot>
+                </div>
+            </div>
+            <div class="food-detail-price">
+                ￥<span>{{food.price|toDecimal2}}</span>
+            </div>
+        </template>
     </div>
 </template>
 
@@ -20,6 +35,9 @@
     export default {
         name: "FoodCard",
         props: {
+            mode: {
+                default: "submit", type: String
+            },
             counts: {
                 default: 0, type: Number
             },
@@ -84,5 +102,19 @@
                 color: #969799;
             }
         }
+    }
+
+    .food-detail-count {
+        .count-number {
+            line-height: 20px;
+            color: #969799;
+        }
+    }
+
+    .food-detail-price {
+        font-size: 13px;
+        line-height: 20px;
+        margin-right: -6px;
+        align-self: flex-end;
     }
 </style>

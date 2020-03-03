@@ -1,5 +1,5 @@
 <template>
-    <div class="order-item">
+    <div class="order-item" @click="()=>{$emit('click', value)}">
         <div class="item-left">
             <van-image :src="value.detailUrl" width="40" height="40" style="border: 1px solid #fcfcfc" class="img"
                        radius="5px" fit="cover"/>
@@ -7,13 +7,13 @@
         <div class="item-right">
             <div class="title">
                             <span class="title__left">{{$store.state.info.shopName}}
-                            <van-icon name="arrow" color="#7f7f7f"></van-icon></span>
+                            <van-icon style="font-weight: 600;" name="arrow" color="#7f7f7f"></van-icon></span>
                 <span class="title__right">{{value.statusLabel}}</span>
             </div>
             <div class="time">{{value.orderStartTime}}</div>
             <div class="des">
                 <span class="des__left">{{value.firstFoodName}} <template v-if="value.foodCounts>0">等{{value.foodCounts}}件</template></span>
-                <span class="des__right">￥{{value.priceTotal}}</span>
+                <span class="des__right">￥{{value.priceTotal|toDecimal2}}</span>
             </div>
         </div>
     </div>

@@ -28,9 +28,9 @@
                               :info="statisticsFood"/>
                 </div>
                 <div class="settlement-msg">
-                    <div class="settlement-price"><span v-show="totalPrice">￥{{totalPrice}}</span></div>
+                    <div class="settlement-price"><span v-show="totalPrice">￥{{totalPrice|toDecimal2}}</span></div>
                     <div class="settlement-bottom-msg">
-                        <span>打包另需 ￥1.5</span>
+                        <span>打包另需 ￥1.50</span>
                     </div>
                 </div>
                 <div class="settlement-btn">
