@@ -22,4 +22,12 @@ function getRemarkAllList(params: any = {
     })
 }
 
-export default {getRemarkUserList, getRemarkAllList}
+function remarkOrder(data: any) {
+    return instance.request({
+        url: '/api/app_remark',
+        method: "post",
+        data
+    })
+}
+
+export default {getRemarkUserList, getRemarkAllList, remarkOrder}

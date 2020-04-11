@@ -10,15 +10,20 @@
             </span>
         </van-nav-bar>
         <div class="user-info-cell-group">
+            <input type="file" ref="file" style="display: none" accept="image/png,image/jpeg,image/gif,image/jpg"
+                   @change="addAvatar">
             <van-cell-group>
-                <van-cell center is-link title="头像">
+                <van-cell center is-link title="头像" @click="uploadAvatar">
                     <div style="height: 100%;display: flex;justify-content: flex-end;">
                         <van-image
                                 width="60"
                                 height="60"
                                 radius="4px"
-                                :src="avatar"
-                        />
+                                :src="avatar">
+                            <template slot="loading">
+                                <van-loading type="spinner" size="20"/>
+                            </template>
+                        </van-image>
                     </div>
                 </van-cell>
                 <van-cell title="账号" is-link :value="$store.state.user.username"/>
@@ -34,6 +39,8 @@
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
     import UserModule from "@/store/modules/user";
+    import UserAPI from "@/api/app/app";
+    import {Toast} from "vant";
 
     @Component({components: {}})
     export default class UserInfo extends Vue {
@@ -41,9 +48,38 @@
             title: '个人信息',
             height: 45
         };
+        avatarFile: any = null;
 
         get avatar() {
             return process.env.VUE_APP_IMAGE + this.$store.state.user.avatar;
+        }
+
+        async addAvatar(event: any) {
+            let inputDOM = (this.$refs['file'] as any);
+            // 通过DOM取文件数据
+            this.avatarFile = inputDOM.files.length === 1 && inputDOM.files[0];
+            if (this.avatarFile.name) {
+                Toast.loading({
+                    duration: 0, // 持续展示 toast
+                    forbidClick: true,
+                    message: '头像上传中'
+                });
+                let formData: FormData = new FormData();
+                formData.append("file", this.avatarFile, this.avatarFile.name);
+                const res: any = await UserAPI.editUserAvatar(formData);
+                Toast.success({
+                    duration: 1, // 持续展示 toast
+                    forbidClick: true,
+                    message: '上传成功'
+                });
+                UserModule.getInfo();
+            } else {
+                console.log('取消上传')
+            }
+        }
+
+        uploadAvatar() {
+            (this.$refs['file'] as any).click();
         }
 
         loginOut() {

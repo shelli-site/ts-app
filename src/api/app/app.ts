@@ -26,4 +26,12 @@ function getUserInfo() {
     })
 }
 
-export default {getAppStatus, login, getUserInfo}
+function editUserAvatar(formData: FormData) {
+    return instance.request({
+        url: '/api/users/updateAvatar',
+        method: "post",
+        data: formData
+    })
+}
+
+export default {getAppStatus, login, getUserInfo, editUserAvatar}

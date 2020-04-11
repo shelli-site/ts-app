@@ -90,7 +90,7 @@
         }
 
         onClickRight() {
-            Toast('按钮');
+            Toast('暂无其他订单');
         }
 
         scrollTo() {
@@ -167,6 +167,7 @@
 
     .load-msg {
         height: 35px;
+        margin: 22.5px 0;
     }
 </style>
 

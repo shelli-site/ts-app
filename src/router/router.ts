@@ -53,6 +53,18 @@ export default [
         component: () => import(/* webpackChunkName: "OrderDetail" */'../views/order/OrderDetail.vue')
     },
     {
+        path: '/DoRemark/:orderId',
+        name: 'DoRemark',
+        meta: {title: '评价页面'},
+        component: () => import(/* webpackChunkName: "DoRemark" */'../views/remark/DoRemark.vue')
+    },
+    {
+        path: '/user/remark',
+        name: 'UserRemark',
+        meta: {title: '我的评价'},
+        component: () => import(/* webpackChunkName: "UserRemark" */'../views/remark/remark.vue')
+    },
+    {
         path: '/update',
         name: 'update',
         meta: {title: '更新'},

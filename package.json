@@ -18,7 +18,7 @@
     "svg-sprite-loader": "^4.1.6",
     "ts-import-plugin": "^1.6.1",
     "ts-loader": "^6.2.0",
-    "vant": "^2.4.1",
+    "vant": "^2.6.0",
     "vconsole": "^3.3.4",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",

@@ -39,6 +39,7 @@
                     <div class="right-price">￥{{orderData.packingCost|toDecimal2}}</div>
                 </div>
                 <div class="order-price">
+                    <i class="top"></i>
                     <div class="left-text">订单总价</div>
                     <div class="right-price">￥{{orderData.priceTotal|toDecimal2}}</div>
                 </div>
@@ -86,7 +87,7 @@
         <div class="foot-bottom">
             <van-button v-if="orderData.status && orderData.status !== 'done'" tag="span" plain hairline round
                         type="primary" size="mini"
-                        class="btn">
+                        class="btn" @click="remarkOrPaid(orderData.status)">
                 <div class="btn-text">
                     <template v-if="orderData.status === 'paid'">
                         评价
@@ -155,7 +156,7 @@
                 const res: any = await OrderAPI.getOrder(id);
                 this.orderData = {
                     ...this.orderData, ...res, ...{
-                        extra: JSON.parse(res.extra),
+                        extra: res.extra,
                         orderFoods: res.orderFoods.map((food: any) => ({
                             counts: food.foodCounts,
                             food: {
@@ -168,7 +169,6 @@
                         }))
                     }
                 }
-                console.log(res);
                 setTimeout(() => {
                     this.$elLoading().hide();
                 }, 200);
@@ -176,10 +176,38 @@
                 throw e;
             }
         }
+
+        remarkOrPaid(state: string) {
+            switch (state) {
+                case 'paid':
+                    this.toRemarkPage();
+                    break;
+                case 'unpaid':
+                    break;
+            }
+        }
+
+        toRemarkPage() {
+            this.$router.push({
+                name: 'DoRemark', params: {orderId: this.$route.params.id}
+                , query: {
+                    detailUrl: this.orderData.orderFoods[0].food.picture,
+                    name: this.orderData.orderFoods[0].food.name,
+                    count: this.orderData.orderFoods.reduce((p: any, c: any) => {
+                        p += c.counts;
+                        return p;
+                    }, 0)
+                }
+            })
+        }
     }
 </script>
 
+
 <style lang="scss" scoped>
+    $triangle_width: 8px;
+    $order_price_bg: #fdfdfd;
+    $order_price_border_color: #eaeaea;
     .order-food {
         padding: 5px 16px 5px 10px;
         background-color: white;
@@ -191,6 +219,7 @@
             align-items: center;
             padding: 10px 10px;
             font-weight: 600;
+
             span {
                 letter-spacing: 1px;
                 margin-right: 2px;
@@ -304,7 +333,12 @@
         }
 
         .order-price {
+            position: relative;
             font-size: 15px;
+            background-color: $order_price_bg;
+            border-top: 1px solid $order_price_border_color;
+            margin: 5px -6px -10px -6px;
+            padding: 0 16px 10px;
             color: #373737;
 
             .right-price {
@@ -333,5 +367,29 @@
                 margin-left: 30px;
             }
         }
+    }
+
+
+    .top {
+        position: absolute;
+        right: 43px;
+        top: -$triangle_width*2;
+    }
+
+    .top:before, .top:after {
+        position: absolute;
+        content: '';
+        border-top: $triangle_width transparent dashed;
+        border-left: $triangle_width transparent dashed;
+        border-right: $triangle_width transparent dashed;
+    }
+
+    .top:before {
+        border-bottom: $triangle_width $order_price_border_color solid;
+    }
+
+    .top:after {
+        top: 1px; /*覆盖并错开1px*/
+        border-bottom: $triangle_width $order_price_bg solid;
     }
 </style>

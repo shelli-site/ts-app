@@ -5,7 +5,7 @@
              :key="index">
             <div class="remark-head">
                 <van-image class="avatar" round fit="cover"
-                           :src="baseImageUrl + remark.avatar">
+                           :src="baseImageUrl + (remark.avatar || user.avatar)">
                     <template slot="error">
                         <img src="img/default-avatar.svg" style="width: 100%;height: 100%">
                     </template>
@@ -15,7 +15,7 @@
                 </van-image>
                 <div class="remark-info">
                     <div class="username">
-                        <div class="name van-ellipsis">{{remark.username||'未知用户'}}</div>
+                        <div class="name van-ellipsis">{{remark.username || user.username || '未知用户'}}</div>
                         <div class="remark-status">
                             <van-tag v-if="remark.serviceState==='不满意'" type="danger">不满意</van-tag>
                             <van-tag v-else type="primary">满意</van-tag>
@@ -59,7 +59,8 @@
             }
         },
         props: {
-            remarkList: {default: () => [], type: Array}
+            remarkList: {default: () => [], type: Array},
+            user: {default: () => ({}), type: Object}
         }
 
     }

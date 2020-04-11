@@ -10,14 +10,14 @@
                      fixed>
             <span slot="title" :style="{lineHeight:nav.height+'px'}">{{nav.title}}</span>
             <span slot="right" :style="{fontWeight: 500,lineHeight:nav.height+'px'}">
-                <span @click="rightClick('message')">
+                <!--<span @click="rightClick('message')">
                    <icon-svg iconClass="xiaoxi"
                              style="font-size: 0.65rem;color:#333333;margin-right: 10px"></icon-svg>
                 </span>
                  <span @click="rightClick('setting')">
                    <icon-svg iconClass="shezhi"
                              style="font-size: 0.65rem;color:#333333;"></icon-svg>
-                 </span>
+                 </span>-->
             </span>
         </van-nav-bar>
         <div class="bg-nav"></div>
@@ -61,7 +61,7 @@
                     个人信息
                 </div>
             </van-cell>
-            <van-cell size="large" is-link>
+            <van-cell size="large" is-link @click="()=>{$router.push({name:'UserRemark'})}">
                 <div slot="icon" style="padding-right: 10px;">
                     <van-icon color="#009afe" name="records" size="16" style="margin-top: 4px;"/>
                 </div>
