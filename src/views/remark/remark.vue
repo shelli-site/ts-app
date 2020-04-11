@@ -92,12 +92,15 @@
     .user-remark {
         padding: 0 16px;
         width: calc(100% - 32px);
+        height: 100%;
+
+        .list {
+            margin: 0 -16px;
+            min-height: calc(100% - 60px); /*px*/
+        }
     }
 
-    .list {
-        margin: 0 -16px;
-        /*padding: 0 16px;*/
-    }
+
 
     .load-msg {
         height: 35px;
