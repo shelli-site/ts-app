@@ -28,6 +28,7 @@
 <script lang="ts">
     import {Component, Vue, Watch} from "vue-property-decorator";
     import UserModule from "@/store/modules/user";
+    import {Toast} from "vant";
 
     @Component({
         components: {}
@@ -47,14 +48,14 @@
             UserModule.login(this.loginForm).then((res: any) => {
                 this.status.isLogining = false;
                 if (this.$route.query.to) {
-                    this.$router.replace({name: (this.$route.query.to as string)}).catch((e: any) => {
-                    })
+                    this.$router.replace({name: (this.$route.query.to as string)});
                 } else {
                     this.$router.go(-1);
                 }
             }).catch((e: any) => {
                 this.status.isLogining = false;
-                console.log(e);
+                Toast.fail("用户名或密码错误！");
+                console.log("登陆失败", e);
             })
             // Login
         }
