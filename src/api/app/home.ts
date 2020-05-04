@@ -7,4 +7,12 @@ function getHomeFood() {
     })
 }
 
-export default {getHomeFood}
+function getOrderedDishes(params: any) {
+    return instance.request({
+        url: '/api/app_food/history',
+        method: "get",
+        params
+    })
+}
+
+export default {getHomeFood, getOrderedDishes}

@@ -100,7 +100,14 @@
                     <div v-else class="empty">暂无评价</div>
                 </tab-item>
                 <tab-item value="tab3" label="点过的菜">
-                    <div class="empty">暂无点过的菜</div>
+                    <template v-if="orderedDishes.pageTotal!==0">
+                        <old-food :list="orderedDishes.list"/>
+                        <van-divider v-if="orderedDishes.pageTotal>5" class="margin-b"
+                                     :style="{ fontSize:'12px',color: '#969799', borderColor: '#969799', padding: '0 16px' }">
+                            我有底线
+                        </van-divider>
+                    </template>
+                    <div v-else class="empty">暂无点过的菜</div>
                 </tab-item>
             </food-tabs><!--tab 分类-->
         </div>
@@ -121,9 +128,11 @@
     import PopupModule from "@/store/modules/popup";
     import DiningModeDialog from "@/views/tabs/home/components/DiningModeDialog/DiningModeDialog.vue";
     import ShoppingModule from "@/store/modules/shopping";
+    import OldFood from "@/views/tabs/home/components/old-food/old-food.vue";
 
     @Component({
         components: {
+            OldFood,
             FoodTabs,
             TabItem,
             FoodPicture,
@@ -152,6 +161,12 @@
             pageSize: 10,
             pageTotal: null
         };
+        orderedDishes: any = {
+            list: [],
+            pageNo: 1,
+            pageSize: 10,
+            pageTotal: null
+        };
         backgroundImg: any = null;
         diningMode: boolean = false;
 
@@ -165,6 +180,7 @@
                 await this.getHomeFoodList();
             }
             this.getRemarkList();
+            this.getOrderFoodList();
             window.addEventListener('scroll', this.scrollTo);
         }
 
@@ -200,6 +216,21 @@
                 this.remark.pageNo = res.pageNo;
                 this.remark.pageSize = res.pageSize;
                 this.remark.pageTotal = res.pageTotal;
+            } catch (e) {
+                throw e;
+            }
+        }
+
+        async getOrderFoodList() {
+            try {
+                const res: any = await HomeAPI.getOrderedDishes({
+                    pageNo: 1,
+                    pageSize: 10
+                });
+                this.orderedDishes.list = res.list;
+                this.orderedDishes.pageNo = res.pageNo;
+                this.orderedDishes.pageSize = res.pageSize;
+                this.orderedDishes.pageTotal = res.pageTotal;
             } catch (e) {
                 throw e;
             }
